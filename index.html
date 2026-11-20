@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=Cinzel:wght@400;500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css" />
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
@@ -126,7 +127,7 @@ tailwind.config = {
           <a href="#residence" class="px-4 h-8 grid place-items-center">Our Story</a>
           <a href="#news" class="px-4 h-8 grid place-items-center">News</a>
         </nav>
-        <a href="#contact" class="btn border border-black/15 h-[34px] px-4 text-[13px]">Contact <span>→</span></a>
+        <a href="#contact" class="btn border border-black/15 h-[34px] px-4 text-[13px]">Contact <i class="ri-arrow-right-line text-[18px] leading-none"></i></a>
       </header>
 
       <!-- headline -->
@@ -154,7 +155,7 @@ tailwind.config = {
         <span>Showreel</span>
       </div>
       <p class="absolute left-[150px] top-[672px] w-[300px] text-[13px] leading-[19.5px] text-ink/60">A design firm building spaces and structures that are timeless and resilient.</p>
-      <a href="#residence" class="btn absolute left-[150px] top-[728px] bg-ink text-white h-[50px] pl-6 pr-2 gap-5">Explore Our Work <span class="w-[34px] h-[34px] rounded-full bg-white text-ink grid place-items-center">→</span></a>
+      <a href="#residence" class="btn absolute left-[150px] top-[728px] bg-ink text-white h-[50px] pl-6 pr-2 gap-5">Explore Our Work <span class="w-[34px] h-[34px] rounded-full bg-white text-ink grid place-items-center"><i class="ri-arrow-right-line text-[18px] leading-none"></i></span></a>
 
       <!-- right -->
       <div class="absolute" style="left:calc(50% + 28px);top:648px;width:140px;height:1px;background:rgba(255,255,255,.7)"><i class="absolute -left-[4px] -top-[3px] w-[7px] h-[7px] rounded-full bg-white"></i></div>
@@ -174,24 +175,27 @@ tailwind.config = {
       <h2 class="h-lg" style="font-size:clamp(40px,5.3vw,76px);letter-spacing:-0.04em;">Our <span class="it text-[1.08em]">story</span></h2>
       <div class="lg:w-[460px] pb-3">
         <p class="text-[14px] leading-[19px] text-ink/60">A father-and-son practice, led from the same Bengaluru studio. Ideas are tested around one table with the whole team before they reach a client. Every commission is shaped by its site, its climate and the people who will use it. We treat each brief as a conversation, and each handover as the start of a long relationship with the building.</p>
-        <a href="#" class="inline-flex items-center gap-2 mt-4 text-[14px] font-medium">Meet the studio <span>→</span></a>
+        <a href="#" class="inline-flex items-center gap-2 mt-4 text-[14px] font-medium">Meet the studio <i class="ri-arrow-right-up-line text-[18px] leading-none"></i></a>
       </div>
     </div>
 
     <div class="grid lg:grid-cols-[880px_1fr] gap-6 mt-14 reveal">
-      <div class="zoom overflow-hidden rounded-[6px] aspect-[880/620]"><img src="assets/residence.jpg" alt="Thomas Associates studio, Bengaluru" class="w-full h-full object-cover" /></div>
+      <div class="zoom relative overflow-hidden rounded-[6px] aspect-[880/620]"><img src="assets/residence.jpg" alt="Thomas Associates studio, Bengaluru" class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent pointer-events-none"></div>
+        <span class="absolute left-5 bottom-5 inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur px-4 h-10 text-[14px] font-medium"><i class="ri-map-pin-2-fill text-[17px] leading-none"></i>Bengaluru, India</span>
+      </div>
       <aside class="bg-mist rounded-[6px] p-10 flex flex-col">
-        <span class="self-start rounded-full border border-black/20 px-3 py-[3px] text-[10px] font-medium tracking-[.14em] uppercase bg-white/60">Our story</span>
+        <span class="self-start inline-flex items-center gap-2 rounded-full border border-black/20 px-3 py-[4px] text-[10px] font-medium tracking-[.14em] uppercase bg-white/60"><i class="ri-quill-pen-line text-[13px] leading-none"></i>Our story</span>
         <p class="mt-5 text-[14px] text-ink/60">Bengaluru, India</p>
         <p class="mt-3 text-[52px] leading-[57px] tracking-[-0.04em]">Two generations</p>
         <dl class="mt-12 text-[14px]">
-          <div class="flex justify-between py-[13px] border-t border-black/10"><dt class="text-ink/60">Founder</dt><dd class="font-medium text-right">TM Thomas, early 1970s</dd></div>
-          <div class="flex justify-between py-[13px] border-t border-black/10"><dt class="text-ink/60">Joined by</dt><dd class="font-medium text-right">Tilak Thomas, 1999</dd></div>
-          <div class="flex justify-between py-[13px] border-t border-black/10"><dt class="text-ink/60">Practice</dt><dd class="font-medium text-right">Architecture &amp; workplace design</dd></div>
+          <div class="flex justify-between items-center gap-4 py-[14px] border-t border-black/10"><dt class="text-ink/60 inline-flex items-center gap-2"><i class="ri-user-star-line text-[18px] leading-none text-ink"></i>Founder</dt><dd class="font-medium text-right">TM Thomas, early 1970s</dd></div>
+          <div class="flex justify-between items-center gap-4 py-[14px] border-t border-black/10"><dt class="text-ink/60 inline-flex items-center gap-2"><i class="ri-team-line text-[18px] leading-none text-ink"></i>Joined by</dt><dd class="font-medium text-right">Tilak Thomas, 1999</dd></div>
+          <div class="flex justify-between items-center gap-4 py-[14px] border-t border-black/10"><dt class="text-ink/60 inline-flex items-center gap-2"><i class="ri-building-2-line text-[18px] leading-none text-ink"></i>Practice</dt><dd class="font-medium text-right">Architecture &amp; workplace design</dd></div>
         </dl>
         <div class="mt-auto pt-10 flex gap-3">
-          <a href="#services" class="btn bg-ink text-white h-[44px] px-6">Core services</a>
-          <a href="#contact" class="btn border border-black/20 h-[44px] px-6">Get in touch</a>
+          <a href="#services" class="btn bg-ink text-white h-[44px] px-6">Core services<i class="ri-arrow-right-up-line text-[18px] leading-none"></i></a>
+          <a href="#contact" class="btn border border-black/20 h-[44px] px-6"><i class="ri-mail-line text-[18px] leading-none"></i>Get in touch</a>
         </div>
       </aside>
     </div>
@@ -207,7 +211,7 @@ tailwind.config = {
       <h2 class="h-lg">Always as good as<br/>our <span class="it text-[1.08em]">next project.</span></h2>
       <div class="lg:w-[380px] pb-3">
         <p class="text-[14px] leading-[19px] text-white/60">Buildings, hotels and campuses designed for some of South India’s leading developers and technology firms.</p>
-        <a href="#" class="inline-flex items-center gap-2 mt-4 text-[14px] font-medium">All projects <span>→</span></a>
+        <a href="#" class="inline-flex items-center gap-2 mt-4 text-[14px] font-medium">All projects <i class="ri-arrow-right-up-line text-[18px] leading-none"></i></a>
       </div>
     </div>
   </div>
@@ -295,9 +299,9 @@ tailwind.config = {
       </div>
     </div>
     <div class="relative mx-auto max-w-[1440px] px-4 lg:px-16 mt-12 flex items-center justify-center gap-6">
-      <button id="projPrev" class="w-11 h-11 rounded-full border border-white/30 grid place-items-center hover:bg-white/10 transition" aria-label="Previous">←</button>
+      <button id="projPrev" class="w-11 h-11 rounded-full border border-white/30 grid place-items-center hover:bg-white/10 transition" aria-label="Previous"><i class="ri-arrow-left-line text-[20px] leading-none"></i></button>
       <div class="w-[200px] h-[2px] bg-white/20 relative overflow-hidden rounded"><i id="projBar" class="absolute inset-y-0 left-0 bg-white rounded transition-all duration-500" style="width:14.3%"></i></div>
-      <button id="projNext" class="w-11 h-11 rounded-full border border-white/30 grid place-items-center hover:bg-white/10 transition" aria-label="Next">→</button>
+      <button id="projNext" class="w-11 h-11 rounded-full border border-white/30 grid place-items-center hover:bg-white/10 transition" aria-label="Next"><i class="ri-arrow-right-line text-[20px] leading-none"></i></button>
     </div>
   </div>
 </section>
@@ -309,7 +313,7 @@ tailwind.config = {
       <h2 class="h-lg">Our <span class="it text-[1.08em]">services</span></h2>
       <div class="lg:w-[380px] pb-3">
         <p class="text-[14px] leading-[19px] text-ink/60">Six core disciplines, from the city plan to the interior.</p>
-        <a href="#contact" class="inline-flex items-center gap-2 mt-4 text-[14px] font-medium">Enquire <span>→</span></a>
+        <a href="#contact" class="inline-flex items-center gap-2 mt-4 text-[14px] font-medium">Enquire <i class="ri-arrow-right-up-line text-[18px] leading-none"></i></a>
       </div>
     </div>
     <div class="grid md:grid-cols-3 gap-x-6 gap-y-16 mt-20">
@@ -383,7 +387,7 @@ tailwind.config = {
         <p>By 1999, when his son Tilak Thomas joined the firm alongside him, Thomas Associates had already established itself as one of the most admired architectural practices in Bengaluru, building the skyline of the city.</p>
         <p>Today, father and son have designed some of the most well-known buildings in South India, be it the UB City or the Kingfisher Tower, residential skyscrapers for some of the leading developers, large-scale Tech Parks and IT Campus for some of the big Technology firms or hospitality projects like Leela Palace Hotel and Residences, ITC Kohenur and Taj Vivanta to name a few. The firm has, over five decades, seen the transformation of the city from a quiet ‘pensioners paradise’ to the mega city it is today.</p>
       </div>
-      <a href="https://mags.itp.com/ArchitectandinteriorsIndia/AI_001_08_2021/#page=10" target="_blank" rel="noopener" class="btn bg-ink text-white h-[50px] pl-7 pr-2 gap-5 mt-10">Read the Article <span class="w-[34px] h-[34px] rounded-full bg-white text-ink grid place-items-center">→</span></a>
+      <a href="https://mags.itp.com/ArchitectandinteriorsIndia/AI_001_08_2021/#page=10" target="_blank" rel="noopener" class="btn bg-ink text-white h-[50px] pl-7 pr-2 gap-5 mt-10">Read the Article <span class="w-[34px] h-[34px] rounded-full bg-white text-ink grid place-items-center"><i class="ri-arrow-right-up-line text-[18px] leading-none"></i></span></a>
     </div>
     <a href="https://mags.itp.com/ArchitectandinteriorsIndia/AI_001_08_2021/#page=10" target="_blank" rel="noopener" class="relative block reveal zoom overflow-hidden rounded-[6px] w-full max-w-[533px]">
       <img src="assets/magazine-cover.png" alt="Architect and Interiors India, August 2021, Thomas Associates feature" class="w-full h-auto" />
@@ -443,21 +447,21 @@ tailwind.config = {
   <div class="frame w-full max-w-[1312px]">
     <div class="flex items-center justify-between text-white mb-5">
       <p class="flex gap-6 items-baseline"><span class="eyebrow opacity-50" style="font-size:10px">Showreel</span><span class="text-[14px]">Thomas Associates · Weaving the fabric of cities</span></p>
-      <button id="closeReel" class="w-10 h-10 rounded-full bg-white/15 backdrop-blur grid place-items-center text-white" aria-label="Close">✕</button>
+      <button id="closeReel" class="w-10 h-10 rounded-full bg-white/15 backdrop-blur grid place-items-center text-white" aria-label="Close"><i class="ri-close-line text-[22px] leading-none"></i></button>
     </div>
     <div class="relative rounded-[4px] overflow-hidden bg-black aspect-video max-h-[calc(100vh-230px)] mx-auto" style="max-width:calc((100vh - 230px) * 1.7778)">
       <video id="reelVideo" src="assets/showreel.mp4" playsinline preload="metadata" class="w-full h-full object-cover"></video>
       <p id="reelCap" class="absolute left-1/2 -translate-x-1/2 bottom-[72px] bg-black/55 text-white text-[15px] px-3 py-1.5 whitespace-nowrap max-w-[92%] overflow-hidden text-ellipsis">“Dedicated to building spaces and structures that are timeless and resilient.”</p>
       <div class="absolute inset-x-0 bottom-0 px-6 pb-4 pt-10 bg-gradient-to-t from-black/50 to-transparent flex items-center gap-3 text-white text-[12px]">
-        <button class="ctl" id="rPlay" aria-label="Play/Pause">❚❚</button>
-        <button class="ctl" id="rBack" aria-label="Back 10s">↺</button>
-        <button class="ctl" id="rFwd" aria-label="Forward 10s">↻</button>
+        <button class="ctl" id="rPlay" aria-label="Play/Pause"><i class="ri-pause-fill text-[22px] leading-none"></i></button>
+        <button class="ctl" id="rBack" aria-label="Back 10s"><i class="ri-replay-10-line text-[22px] leading-none"></i></button>
+        <button class="ctl" id="rFwd" aria-label="Forward 10s"><i class="ri-forward-10-line text-[22px] leading-none"></i></button>
         <span id="rCur" class="tabular-nums w-8">0:00</span>
         <input id="reelBar" type="range" min="0" max="1000" value="0" />
         <span id="rDur" class="tabular-nums w-8 text-right">0:31</span>
-        <button class="ctl" id="rMute" aria-label="Mute">🔊</button>
-        <button class="ctl" id="rCc" aria-label="Captions">CC</button>
-        <button class="ctl" id="rFull" aria-label="Fullscreen">⛶</button>
+        <button class="ctl" id="rMute" aria-label="Mute"><i class="ri-volume-up-line text-[22px] leading-none"></i></button>
+        <button class="ctl" id="rCc" aria-label="Captions"><i class="ri-closed-captioning-line text-[22px] leading-none"></i></button>
+        <button class="ctl" id="rFull" aria-label="Fullscreen"><i class="ri-fullscreen-line text-[20px] leading-none"></i></button>
       </div>
     </div>
     <div class="flex justify-center gap-3 mt-6">
@@ -536,13 +540,13 @@ tailwind.config = {
     m.addEventListener('click', e => { if (e.target === m) close(); });
     addEventListener('keydown', e => { if (e.key === 'Escape') close(); if (e.key === ' ' && m.classList.contains('open')) { e.preventDefault(); $('rPlay').click(); } });
     $('rPlay').onclick = () => v.paused ? v.play() : v.pause();
-    v.onplay = () => $('rPlay').textContent = '❚❚'; v.onpause = () => $('rPlay').textContent = '▶';
+    const ic = n => '<i class="' + n + ' text-[22px] leading-none"></i>'; v.onplay = () => $('rPlay').innerHTML = ic('ri-pause-fill'); v.onpause = () => $('rPlay').innerHTML = ic('ri-play-fill');
     $('rBack').onclick = () => v.currentTime -= 10; $('rFwd').onclick = () => v.currentTime += 10;
     v.onloadedmetadata = () => $('rDur').textContent = fmt(v.duration);
     v.ontimeupdate = () => { $('rCur').textContent = fmt(v.currentTime); $('reelBar').value = v.currentTime / v.duration * 1000; };
-    v.onended = () => $('rPlay').textContent = '▶';
+    v.onended = () => $('rPlay').innerHTML = ic('ri-play-fill');
     $('reelBar').oninput = e => v.currentTime = e.target.value / 1000 * v.duration;
-    $('rMute').onclick = () => { v.muted = !v.muted; $('rMute').textContent = v.muted ? '🔇' : '🔊'; };
+    $('rMute').onclick = () => { v.muted = !v.muted; $('rMute').innerHTML = ic(v.muted ? 'ri-volume-mute-line' : 'ri-volume-up-line'); };
     $('rCc').onclick = () => $('reelCap').classList.toggle('hidden');
     $('rFull').onclick = () => v.requestFullscreen && v.requestFullscreen();
     v.onclick = $('rPlay').onclick;
