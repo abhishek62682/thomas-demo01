@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Thomas Associates Architects | Architecture & Workplace Design, Bengaluru</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=Cinzel:wght@400;500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Geist', 'Inter', 'sans-serif'],
+        serif: ['"Instrument Serif"', 'serif'],
+        display: ['Cinzel', 'serif'],
+      },
+      colors: {
+        ink: '#0e0e0c',
+        mist: '#f5f6f8',
+        navy: { 900: '#091b4a', 700: '#133c8c', 500: '#3d6fc0', 300: '#8fafd8', sand: '#c9b9a6' },
+      },
+    },
+  },
+};
+</script>
+<style>
+  :root {
+    --token-sky-top: #133c8c;   /* abcad622… → 0%   */
+    --token-sky-mid: #3d6fc0;   /* d11ec63e… → 45%  */
+    --token-sky-low: #8fafd8;   /* c4ee5416… → 72%  */
+    --token-sky-sand: #c9b9a6;  /* b0545d74… → 100% */
+    --token-night: #091b4a;
+  }
+  .bg-sky { background: linear-gradient(180deg, var(--token-sky-top) 0%, var(--token-sky-mid) 45%, var(--token-sky-low) 72%, var(--token-sky-sand) 100%); }
+  .bg-sky-footer { background: linear-gradient(180deg, var(--token-sky-top) 0%, var(--token-sky-mid) 50%, var(--token-sky-low) 80%, var(--token-sky-sand) 100%); }
+  .bg-night { background: linear-gradient(180deg, var(--token-night) 0%, var(--token-sky-top) 100%); }
+  .reel-ring { position: absolute; inset: 0; border-radius: 999px; background: #d7d7d7; box-shadow: 0 0 30px rgba(14,14,12,.12); animation: ringPulse 2.2s ease-in-out infinite; }
+  @keyframes ringPulse { 0%,100% { transform: scale(.94); } 50% { transform: scale(1.04); } }
+  .reel-btn { transition: transform .4s cubic-bezier(.2,.7,.2,1); } .reel-btn:hover { transform: scale(1.06); }
+  .reel-modal { position: fixed; inset: 0; z-index: 90; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px 24px; background: rgba(14,14,12,.65); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); opacity: 0; visibility: hidden; transition: opacity .5s ease, visibility .5s; }
+  .reel-modal.open { opacity: 1; visibility: visible; }
+  .reel-modal .frame { transform: translateY(16px) scale(.98); transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+  .reel-modal.open .frame { transform: none; }
+  .ctl { color: #fff; display: grid; place-items: center; width: 28px; height: 28px; opacity: .9; } .ctl:hover { opacity: 1; }
+  #reelBar { -webkit-appearance: none; appearance: none; height: 2px; background: rgba(255,255,255,.35); border-radius: 2px; flex: 1; cursor: pointer; }
+  #reelBar::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: #fff; }
+  .chap { display: inline-flex; gap: 12px; align-items: center; height: 40px; padding: 0 20px; border-radius: 999px; color: #fff; font-size: 13px; border: 1px solid rgba(255,255,255,.3); transition: .3s; } .chap.on { background: #fff; color: #0e0e0c; }
+  .proj { width: min(421px, 78vw); opacity: .5; scale: .78; will-change: scale, opacity; translate: 0 0; transition: opacity .7s ease, scale .7s cubic-bezier(.25,.8,.25,1), translate .7s cubic-bezier(.25,.8,.25,1); }
+  .proj.swiper-slide-active ~ .proj { translate: 46px 0; }
+  .proj:has(~ .swiper-slide-active) { translate: -46px 0; }
+  .proj.swiper-slide-active { opacity: 1; scale: 1; z-index: 2; }
+  .proj .ph { aspect-ratio: 421/580; }
+  #projSwiper { overflow: visible; } #projSwiper .swiper-wrapper { align-items: center; }
+  .odo { display: inline-flex; height: 1em; overflow: hidden; font-variant-numeric: tabular-nums; }
+  .odo .d { display: block; height: 1em; overflow: hidden; }
+  .odo .d > i { display: block; font-style: normal; transition: transform 2.4s cubic-bezier(.16,1,.3,1); will-change: transform; }
+  .odo .d > i > b { display: block; height: 1em; font-weight: 400; }
+  #stats .odo-wrap { font-weight: 400; display: flex; align-items: flex-start; flex-wrap: nowrap; }
+  .odo-suf { font-family: inherit; font-weight: 300; letter-spacing: -0.02em; margin-left: .04em; color: rgba(255,255,255,.7); }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  .lenis.lenis-stopped { overflow: hidden; }
+  body { font-family: 'Geist', sans-serif; color: #0e0e0c; background: #fff; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  .h-xl { font-size: clamp(44px, 7.2vw, 104px); line-height: .96; letter-spacing: -0.05em; }
+  .h-lg { font-size: clamp(40px, 5.3vw, 76px); line-height: 1.1; letter-spacing: -0.04em; }
+  .h-md { font-size: clamp(36px, 4.4vw, 64px); line-height: 1.1; letter-spacing: -0.04em; }
+  .it { font-family: 'Instrument Serif', serif; font-style: italic; letter-spacing: -0.02em; font-weight: 400; }
+  .eyebrow { font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 500; }
+  .stars { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  .zoom img { transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+  .zoom:hover img { transform: scale(1.05); }
+  .btn { display: inline-flex; align-items: center; gap: 10px; border-radius: 999px; font-size: 14px; font-weight: 500; transition: transform .3s, background .3s; }
+  .btn:hover { transform: translateY(-1px); }
+  .wordmark { background: linear-gradient(180deg, #fff 10%, rgba(255,255,255,.15) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .loader { position: fixed; inset: 0; z-index: 100; background: linear-gradient(180deg, #0e1b48 0%, #15265c 33%, #193073 66%, #1f3a87 100%); display: grid; place-items: center; transition: opacity .8s ease .2s, visibility .8s ease .2s; }
+  .loader img { width: 260px; height: auto; filter: brightness(0) invert(1); animation: logoIn 1.4s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes logoIn { from { opacity: 0; filter: brightness(0) invert(1) blur(14px); } to { opacity: .9; filter: brightness(0) invert(1) blur(0); } }
+  .loader.off { opacity: 0; visibility: hidden; }
+  @keyframes bird { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-6px) } }
+</style>
+</head>
+<body>
+
+<!-- Loader -->
+<div class="loader" id="loader">
+  <img src="assets/client-logo.svg" alt="Client logo" />
+</div>
+
+<!-- ============ HERO ============ -->
+<section id="hero" class="relative h-[240vh]">
+  <div class="sticky top-0 h-screen min-h-[780px] overflow-hidden bg-sky">
+    <canvas class="stars" data-stars></canvas>
+
+    <p class="absolute top-[24px] inset-x-0 text-center text-[11px] tracking-[.24em] text-white/85 font-medium uppercase px-4">Thomas Associates · Architecture &amp; Workplace Design</p>
+
+    <!-- white card -->
+    <div id="heroCard" class="absolute top-[82px] bottom-0 left-4 right-4 lg:left-16 lg:right-16 bg-white">
+      <div class="absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-transparent to-transparent"></div>
+
+      <!-- nav -->
+      <header class="relative flex items-center justify-between px-8 pt-[27px]">
+        <a href="#" class="flex items-center"><img src="assets/client-logo.svg" alt="Client logo" class="h-[42px] w-auto" /></a>
+        <nav class="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center text-[14px]">
+          <a href="#" class="rounded-full bg-ink text-white px-4 h-8 grid place-items-center">Home</a>
+          <a href="#services" class="px-4 h-8 grid place-items-center">Services</a>
+          <a href="#developments" class="px-4 h-8 grid place-items-center">Projects</a>
+          <a href="#residence" class="px-4 h-8 grid place-items-center">Our Story</a>
+          <a href="#news" class="px-4 h-8 grid place-items-center">News</a>
+        </nav>
+        <a href="#contact" class="btn border border-black/15 h-[34px] px-4 text-[13px]">Contact <span>→</span></a>
+      </header>
+
+      <!-- headline -->
+      <h1 class="relative text-center h-xl font-normal mt-[40px] lg:mt-[46px] px-4 max-lg:text-[clamp(38px,11vw,56px)] max-lg:leading-[1.02]" style="text-wrap:balance">
+        Fifty years weaving <br class="hidden lg:block"/>the fabric of <span class="it text-[1.04em]">cities.</span>
+      </h1>
+    </div>
+
+    <!-- tower -->
+    <img id="tower" src="assets/tower.png" alt="Tower rising above the city at dusk"
+         class="absolute left-1/2 -translate-x-1/2 top-[200px] max-w-none w-[1420px] lg:w-[2044px] pointer-events-none select-none" />
+
+
+    <div id="heroUi" class="hidden lg:block">
+      <!-- birds -->
+      <img src="assets/birds.png" alt="" class="absolute pointer-events-none select-none" style="left:calc(50% + 213px);top:487px;width:162px;height:auto;animation:bird 6s ease-in-out infinite" />
+      <!-- left -->
+      <div class="absolute left-[150px] top-[545px] flex items-center gap-[22px] text-[11px] font-medium uppercase tracking-[.2em]">
+        <span>Watch</span>
+        <button id="openReel" aria-label="Play showreel" class="reel-btn relative grid place-items-center w-[74px] h-[74px] rounded-full">
+          <span class="reel-ring"></span>
+          <img src="assets/showreel.jpg" alt="" class="relative w-[54px] h-[54px] rounded-full object-cover" />
+          <svg class="absolute w-[15px] h-[15px]" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="1.3" stroke-linejoin="round"><path d="M3 1.5v11l9-5.5z"/></svg>
+        </button>
+        <span>Showreel</span>
+      </div>
+      <p class="absolute left-[150px] top-[672px] w-[300px] text-[13px] leading-[19.5px] text-ink/60">A design firm building spaces and structures that are timeless and resilient.</p>
+      <a href="#residence" class="btn absolute left-[150px] top-[728px] bg-ink text-white h-[50px] pl-6 pr-2 gap-5">Explore Our Work <span class="w-[34px] h-[34px] rounded-full bg-white text-ink grid place-items-center">→</span></a>
+
+      <!-- right -->
+      <div class="absolute" style="left:calc(50% + 28px);top:648px;width:140px;height:1px;background:rgba(255,255,255,.7)"><i class="absolute -left-[4px] -top-[3px] w-[7px] h-[7px] rounded-full bg-white"></i></div>
+      <div class="absolute left-[888px] top-[634px]">
+        <p class="text-[10px] font-semibold tracking-[.14em] text-ink">THOMAS ASSOCIATES</p>
+        <p class="text-[12px] text-ink/60 mt-1">Architects &amp; workplace designers</p>
+      </div>
+      <p class="absolute left-[1030px] top-[720px] w-[260px] text-[11px] tracking-[.06em] leading-[16.5px] uppercase text-ink">Father and son, one studio, shaping the skyline of Bengaluru for over five decades.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESIDENCE ============ -->
+<section id="residence" class="relative bg-white -mt-[40vh] pt-10 pb-24">
+  <div class="mx-auto max-w-[1440px] px-4 lg:px-16">
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 reveal">
+      <h2 class="h-lg" style="font-size:clamp(40px,5.3vw,76px);letter-spacing:-0.04em;">Our <span class="it text-[1.08em]">story</span></h2>
+      <div class="lg:w-[460px] pb-3">
+        <p class="text-[14px] leading-[19px] text-ink/60">A father-and-son practice, led from the same Bengaluru studio. Ideas are tested around one table with the whole team before they reach a client. Every commission is shaped by its site, its climate and the people who will use it. We treat each brief as a conversation, and each handover as the start of a long relationship with the building.</p>
+        <a href="#" class="inline-flex items-center gap-2 mt-4 text-[14px] font-medium">Meet the studio <span>→</span></a>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-[880px_1fr] gap-6 mt-14 reveal">
+      <div class="zoom overflow-hidden rounded-[6px] aspect-[880/620]"><img src="assets/residence.jpg" alt="Thomas Associates studio, Bengaluru" class="w-full h-full object-cover" /></div>
+      <aside class="bg-mist rounded-[6px] p-10 flex flex-col">
+        <span class="self-start rounded-full border border-black/20 px-3 py-[3px] text-[10px] font-medium tracking-[.14em] uppercase bg-white/60">Our story</span>
+        <p class="mt-5 text-[14px] text-ink/60">Bengaluru, India</p>
+        <p class="mt-3 text-[52px] leading-[57px] tracking-[-0.04em]">Two generations</p>
+        <dl class="mt-12 text-[14px]">
+          <div class="flex justify-between py-[13px] border-t border-black/10"><dt class="text-ink/60">Founder</dt><dd class="font-medium text-right">TM Thomas, early 1970s</dd></div>
+          <div class="flex justify-between py-[13px] border-t border-black/10"><dt class="text-ink/60">Joined by</dt><dd class="font-medium text-right">Tilak Thomas, 1999</dd></div>
+          <div class="flex justify-between py-[13px] border-t border-black/10"><dt class="text-ink/60">Practice</dt><dd class="font-medium text-right">Architecture &amp; workplace design</dd></div>
+        </dl>
+        <div class="mt-auto pt-10 flex gap-3">
+          <a href="#services" class="btn bg-ink text-white h-[44px] px-6">Core services</a>
+          <a href="#contact" class="btn border border-black/20 h-[44px] px-6">Get in touch</a>
+        </div>
+      </aside>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="developments" class="relative overflow-hidden text-white pt-[160px] pb-[140px] bg-night">
+  <canvas class="stars" data-stars></canvas>
+  <div class="relative mx-auto max-w-[1440px] px-4 lg:px-16">
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 reveal">
+      <h2 class="h-lg">Always as good as<br/>our <span class="it text-[1.08em]">next project.</span></h2>
+      <div class="lg:w-[380px] pb-3">
+        <p class="text-[14px] leading-[19px] text-white/60">Buildings, hotels and campuses designed for some of South India’s leading developers and technology firms.</p>
+        <a href="#" class="inline-flex items-center gap-2 mt-4 text-[14px] font-medium">All projects <span>→</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="relative mt-20 pb-12 reveal">
+    <div class="swiper py-6" id="projSwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide proj">
+          <a href="#" class="block">
+            <div class="ph relative overflow-hidden rounded-[6px]">
+              <img src="assets/monument.jpg" alt="UB City" class="w-full h-full object-cover" />
+              <span class="absolute top-4 left-4 rounded-full bg-white text-ink px-3 py-1 eyebrow" style="letter-spacing:.12em">Landmark</span>
+              <span class="absolute top-4 right-4 text-white/80 text-[12px] tabular-nums">01 / 07</span>
+            </div>
+            <div class="mt-5"><h3 class="text-[26px] leading-[31px] tracking-[-0.03em]">UB City</h3>
+              <p class="text-[14px] text-white/60 mt-1">Bengaluru</p></div>
+          </a>
+        </div>
+        <div class="swiper-slide proj">
+          <a href="#" class="block">
+            <div class="ph relative overflow-hidden rounded-[6px]">
+              <img src="assets/aurelia.jpg" alt="Kingfisher Tower" class="w-full h-full object-cover" />
+              <span class="absolute top-4 left-4 rounded-full bg-white text-ink px-3 py-1 eyebrow" style="letter-spacing:.12em">Landmark</span>
+              <span class="absolute top-4 right-4 text-white/80 text-[12px] tabular-nums">02 / 07</span>
+            </div>
+            <div class="mt-5"><h3 class="text-[26px] leading-[31px] tracking-[-0.03em]">Kingfisher Tower</h3>
+              <p class="text-[14px] text-white/60 mt-1">Bengaluru</p></div>
+          </a>
+        </div>
+        <div class="swiper-slide proj">
+          <a href="#" class="block">
+            <div class="ph relative overflow-hidden rounded-[6px]">
+              <img src="assets/tashkent.jpg" alt="Residential Skyscrapers" class="w-full h-full object-cover" />
+              <span class="absolute top-4 left-4 rounded-full bg-white text-ink px-3 py-1 eyebrow" style="letter-spacing:.12em">Residential</span>
+              <span class="absolute top-4 right-4 text-white/80 text-[12px] tabular-nums">03 / 07</span>
+            </div>
+            <div class="mt-5"><h3 class="text-[26px] leading-[31px] tracking-[-0.03em]">Residential Skyscrapers</h3>
+              <p class="text-[14px] text-white/60 mt-1">For leading developers</p></div>
+          </a>
+        </div>
+        <div class="swiper-slide proj">
+          <a href="#" class="block">
+            <div class="ph relative overflow-hidden rounded-[6px]">
+              <img src="assets/residence.jpg" alt="The Leela Palace Hotel &amp; Residences" class="w-full h-full object-cover" />
+              <span class="absolute top-4 left-4 rounded-full bg-white text-ink px-3 py-1 eyebrow" style="letter-spacing:.12em">Hospitality</span>
+              <span class="absolute top-4 right-4 text-white/80 text-[12px] tabular-nums">04 / 07</span>
+            </div>
+            <div class="mt-5"><h3 class="text-[26px] leading-[31px] tracking-[-0.03em]">The Leela Palace Hotel &amp; Residences</h3>
+              <p class="text-[14px] text-white/60 mt-1">Hotel and residences</p></div>
+          </a>
+        </div>
+        <div class="swiper-slide proj">
+          <a href="#" class="block">
+            <div class="ph relative overflow-hidden rounded-[6px]">
+              <img src="assets/facade.jpg" alt="ITC Kohenur" class="w-full h-full object-cover" />
+              <span class="absolute top-4 left-4 rounded-full bg-white text-ink px-3 py-1 eyebrow" style="letter-spacing:.12em">Hospitality</span>
+              <span class="absolute top-4 right-4 text-white/80 text-[12px] tabular-nums">05 / 07</span>
+            </div>
+            <div class="mt-5"><h3 class="text-[26px] leading-[31px] tracking-[-0.03em]">ITC Kohenur</h3>
+              <p class="text-[14px] text-white/60 mt-1">Hotel</p></div>
+          </a>
+        </div>
+        <div class="swiper-slide proj">
+          <a href="#" class="block">
+            <div class="ph relative overflow-hidden rounded-[6px]">
+              <img src="assets/rooftop.jpg" alt="Taj Vivanta" class="w-full h-full object-cover" />
+              <span class="absolute top-4 left-4 rounded-full bg-white text-ink px-3 py-1 eyebrow" style="letter-spacing:.12em">Hospitality</span>
+              <span class="absolute top-4 right-4 text-white/80 text-[12px] tabular-nums">06 / 07</span>
+            </div>
+            <div class="mt-5"><h3 class="text-[26px] leading-[31px] tracking-[-0.03em]">Taj Vivanta</h3>
+              <p class="text-[14px] text-white/60 mt-1">Hotel</p></div>
+          </a>
+        </div>
+        <div class="swiper-slide proj">
+          <a href="#" class="block">
+            <div class="ph relative overflow-hidden rounded-[6px]">
+              <img src="assets/dubai.jpg" alt="Tech Parks &amp; IT Campuses" class="w-full h-full object-cover" />
+              <span class="absolute top-4 left-4 rounded-full bg-white text-ink px-3 py-1 eyebrow" style="letter-spacing:.12em">Workplace</span>
+              <span class="absolute top-4 right-4 text-white/80 text-[12px] tabular-nums">07 / 07</span>
+            </div>
+            <div class="mt-5"><h3 class="text-[26px] leading-[31px] tracking-[-0.03em]">Tech Parks &amp; IT Campuses</h3>
+              <p class="text-[14px] text-white/60 mt-1">For leading technology firms</p></div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="relative mx-auto max-w-[1440px] px-4 lg:px-16 mt-12 flex items-center justify-center gap-6">
+      <button id="projPrev" class="w-11 h-11 rounded-full border border-white/30 grid place-items-center hover:bg-white/10 transition" aria-label="Previous">←</button>
+      <div class="w-[200px] h-[2px] bg-white/20 relative overflow-hidden rounded"><i id="projBar" class="absolute inset-y-0 left-0 bg-white rounded transition-all duration-500" style="width:14.3%"></i></div>
+      <button id="projNext" class="w-11 h-11 rounded-full border border-white/30 grid place-items-center hover:bg-white/10 transition" aria-label="Next">→</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section id="services" class="bg-white py-[120px]">
+  <div class="mx-auto max-w-[1440px] px-4 lg:px-16">
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 reveal">
+      <h2 class="h-lg">Our <span class="it text-[1.08em]">services</span></h2>
+      <div class="lg:w-[380px] pb-3">
+        <p class="text-[14px] leading-[19px] text-ink/60">Six core disciplines, from the city plan to the interior.</p>
+        <a href="#contact" class="inline-flex items-center gap-2 mt-4 text-[14px] font-medium">Enquire <span>→</span></a>
+      </div>
+    </div>
+    <div class="grid md:grid-cols-3 gap-x-6 gap-y-16 mt-20">
+      <a href="#contact" class="block reveal">
+        <div class="zoom overflow-hidden rounded-[6px] aspect-[421/300]"><img src="assets/tashkent.jpg" alt="Urban Design" class="w-full h-full object-cover" /></div>
+        <h3 class="mt-5 text-[24px] leading-[30px] tracking-[-0.02em]">Urban Design</h3>
+        <p class="mt-2 text-[14px] leading-[19.6px] text-ink/60 max-w-[380px]">Shaping streets, districts and public spaces that work as part of the wider city.</p>
+      </a>
+      <a href="#contact" class="block reveal">
+        <div class="zoom overflow-hidden rounded-[6px] aspect-[421/300]"><img src="assets/dubai.jpg" alt="Master Planning" class="w-full h-full object-cover" /></div>
+        <h3 class="mt-5 text-[24px] leading-[30px] tracking-[-0.02em]">Master Planning</h3>
+        <p class="mt-2 text-[14px] leading-[19.6px] text-ink/60 max-w-[380px]">Large-scale planning for campuses, townships and mixed-use developments.</p>
+      </a>
+      <a href="#contact" class="block reveal">
+        <div class="zoom overflow-hidden rounded-[6px] aspect-[421/300]"><img src="assets/casa.jpg" alt="Landscape" class="w-full h-full object-cover" /></div>
+        <h3 class="mt-5 text-[24px] leading-[30px] tracking-[-0.02em]">Landscape</h3>
+        <p class="mt-2 text-[14px] leading-[19.6px] text-ink/60 max-w-[380px]">Open spaces and greenery designed as an extension of the architecture.</p>
+      </a>
+      <a href="#contact" class="block reveal">
+        <div class="zoom overflow-hidden rounded-[6px] aspect-[421/300]"><img src="assets/facade.jpg" alt="Architecture" class="w-full h-full object-cover" /></div>
+        <h3 class="mt-5 text-[24px] leading-[30px] tracking-[-0.02em]">Architecture</h3>
+        <p class="mt-2 text-[14px] leading-[19.6px] text-ink/60 max-w-[380px]">Residential towers, hotels and commercial buildings, from concept to completion.</p>
+      </a>
+      <a href="#contact" class="block reveal">
+        <div class="zoom overflow-hidden rounded-[6px] aspect-[421/300]"><img src="assets/london.jpg" alt="Workplace Design" class="w-full h-full object-cover" /></div>
+        <h3 class="mt-5 text-[24px] leading-[30px] tracking-[-0.02em]">Workplace Design</h3>
+        <p class="mt-2 text-[14px] leading-[19.6px] text-ink/60 max-w-[380px]">Offices, tech parks and IT campuses built around how teams actually work.</p>
+      </a>
+      <a href="#contact" class="block reveal">
+        <div class="zoom overflow-hidden rounded-[6px] aspect-[421/300]"><img src="assets/room3.jpg" alt="Interior Design" class="w-full h-full object-cover" /></div>
+        <h3 class="mt-5 text-[24px] leading-[30px] tracking-[-0.02em]">Interior Design</h3>
+        <p class="mt-2 text-[14px] leading-[19.6px] text-ink/60 max-w-[380px]">Interiors detailed with the same care and discipline as the building itself.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATS ============ -->
+<section id="stats" style="font-family:'Poppins',sans-serif" class="relative overflow-hidden bg-night text-white py-[70px]">
+  <canvas class="stars" data-stars></canvas>
+  <div class="relative mx-auto max-w-[1440px] px-4 lg:px-16">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-8 lg:gap-x-12 gap-y-14">
+      <div class="stat reveal">
+        <p class="odo-wrap text-[clamp(44px,5.8vw,86px)] leading-none tracking-[-0.05em] whitespace-nowrap"><span class="odo" data-to="2000" aria-label="2000+"></span><span class="odo-suf">+</span></p>
+        <p class="mt-6 text-[13px] leading-[19px] text-white/60 uppercase tracking-[.1em]">Projects</p>
+      </div>
+      <div class="stat reveal">
+        <p class="odo-wrap text-[clamp(44px,5.8vw,86px)] leading-none tracking-[-0.05em] whitespace-nowrap"><span class="odo" data-to="200" aria-label="200+"></span><span class="odo-suf">+</span></p>
+        <p class="mt-6 text-[13px] leading-[19px] text-white/60 uppercase tracking-[.1em]">Million sq ft<br/>(completed projects)</p>
+      </div>
+      <div class="stat reveal">
+        <p class="odo-wrap text-[clamp(44px,5.8vw,86px)] leading-none tracking-[-0.05em] whitespace-nowrap"><span class="odo" data-to="70" aria-label="70+"></span><span class="odo-suf">+</span></p>
+        <p class="mt-6 text-[13px] leading-[19px] text-white/60 uppercase tracking-[.1em]">Architects</p>
+      </div>
+      <div class="stat reveal">
+        <p class="odo-wrap text-[clamp(44px,5.8vw,86px)] leading-none tracking-[-0.05em] whitespace-nowrap"><span class="odo" data-to="45" aria-label="45+"></span><span class="odo-suf">+</span></p>
+        <p class="mt-6 text-[13px] leading-[19px] text-white/60 uppercase tracking-[.1em]">Million sq ft<br/>(current projects)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IN THE NEWS ============ -->
+<section id="news" class="bg-white py-[120px]">
+  <div class="mx-auto max-w-[1440px] px-4 lg:px-16 grid lg:grid-cols-[1fr_533px] gap-16 lg:gap-[120px] items-start">
+    <div class="reveal">
+      <h2 class="h-lg">In the <span class="it text-[1.08em]">news</span></h2>
+      <p class="mt-8 text-[22px] leading-[30px] tracking-[-0.02em] text-ink/70 max-w-[560px]">Article published by ITP Media Group &amp; Architect and Interiors India.</p>
+      <div class="mt-8 space-y-6 text-[15px] leading-[24px] text-ink/60 max-w-[620px]">
+        <p>“As I sit here, in my studio, I was reflecting on the lengthy path to this room, this office, this city and this wonderful profession of architecture. Five decades later, being in the same line, how is it possible to be still vitally interested, still keen to create, still keen to put dreams to reality,” muses Architect TM Thomas, the man who established his Architectural practice in the early 1970’s.</p>
+        <p>By 1999, when his son Tilak Thomas joined the firm alongside him, Thomas Associates had already established itself as one of the most admired architectural practices in Bengaluru, building the skyline of the city.</p>
+        <p>Today, father and son have designed some of the most well-known buildings in South India, be it the UB City or the Kingfisher Tower, residential skyscrapers for some of the leading developers, large-scale Tech Parks and IT Campus for some of the big Technology firms or hospitality projects like Leela Palace Hotel and Residences, ITC Kohenur and Taj Vivanta to name a few. The firm has, over five decades, seen the transformation of the city from a quiet ‘pensioners paradise’ to the mega city it is today.</p>
+      </div>
+      <a href="https://mags.itp.com/ArchitectandinteriorsIndia/AI_001_08_2021/#page=10" target="_blank" rel="noopener" class="btn bg-ink text-white h-[50px] pl-7 pr-2 gap-5 mt-10">Read the Article <span class="w-[34px] h-[34px] rounded-full bg-white text-ink grid place-items-center">→</span></a>
+    </div>
+    <a href="https://mags.itp.com/ArchitectandinteriorsIndia/AI_001_08_2021/#page=10" target="_blank" rel="noopener" class="relative block reveal zoom overflow-hidden rounded-[6px] w-full max-w-[533px]">
+      <img src="assets/magazine-cover.png" alt="Architect and Interiors India, August 2021, Thomas Associates feature" class="w-full h-auto" />
+    </a>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section id="contact" class="relative overflow-hidden text-white text-center bg-night">
+  <canvas class="stars" data-stars></canvas>
+  <div class="relative px-4 pt-[190px] pb-[130px]">
+    <h2 class="h-xl reveal">Let’s design what<br/><span class="it text-[1.04em]">comes next.</span></h2>
+    <p class="mt-10 text-[16px] text-white/85">You can contact us for more information.</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a href="mailto:enquiries@thomassociates.com" class="btn bg-white text-ink h-[40px] px-5 text-[14px]">New Business Enquiries</a>
+      <a href="tel:+918040787000" class="btn border border-white/40 text-white h-[40px] px-5 text-[14px] hover:bg-white/10">+91 80 4078 7000</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="relative overflow-hidden text-white bg-sky-footer">
+  <div class="relative mx-auto max-w-[1440px] px-4 lg:px-16 pt-[110px]">
+    <div class="grid lg:grid-cols-[1fr_auto] gap-16">
+      <div>
+        <img src="assets/client-logo.svg" alt="Thomas Associates Architects" class="h-14 w-auto" style="filter:brightness(0) invert(1)" />
+        <p class="mt-6 text-[14px] leading-[20px] text-white/85 max-w-[320px]">Thomas Associates Architects, an architecture and workplace design studio in Bengaluru.</p>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-x-14 gap-y-10 text-[14px] text-white/85">
+        <div><p class="eyebrow text-white/45 mb-5" style="letter-spacing:.18em">Explore</p><ul class="space-y-3"><li><a href="#services">Services</a></li><li><a href="#developments">Projects</a></li><li><a href="#residence">Our Story</a></li><li><a href="#contact">Contact</a></li></ul></div>
+        <div><p class="eyebrow text-white/45 mb-5" style="letter-spacing:.18em">Contact</p><ul class="space-y-4">
+          <li><a href="mailto:enquiries@thomassociates.com" class="block">enquiries@thomassociates.com</a><span class="text-[12px] text-white/50">New Business Enquiries</span></li>
+          <li><a href="mailto:careers@thomassociates.com" class="block">careers@thomassociates.com</a><span class="text-[12px] text-white/50">Career Opportunities</span></li>
+          <li><a href="mailto:products@thomassociates.com" class="block">products@thomassociates.com</a><span class="text-[12px] text-white/50">Vendor Empanelment</span></li></ul></div>
+        <div><p class="eyebrow text-white/45 mb-5" style="letter-spacing:.18em">Studio</p><address class="not-italic space-y-3 leading-[20px]">
+          <p><a href="https://goo.gl/maps/toneTC8PSf1XSQYZ9" target="_blank" rel="noopener" class="hover:underline underline-offset-4">Thomas Associates Architects<br/>No. 32/4 Kasturba Road Cross<br/>Bangalore – 560001<br/>Karnataka, India</a></p>
+          <p><a href="tel:+918040787000">+91 80 4078 7000</a></p></address></div>
+        <div><p class="eyebrow text-white/45 mb-5" style="letter-spacing:.18em">Socials</p><ul class="space-y-3">
+          <li><a href="http://www.linkedin.com/company/thomassociates" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="http://www.facebook.com/thomassociates" target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href="http://www.instagram.com/thomassociates" target="_blank" rel="noopener">Instagram</a></li></ul></div>
+      </div>
+    </div>
+
+    <p class="wordmark font-display text-center leading-none select-none mt-16 lg:mt-10 whitespace-nowrap" style="font-size:clamp(64px,16.6vw,240px);letter-spacing:.02em">THOMAS</p>
+
+    <div class="flex flex-wrap items-center justify-between gap-4 pb-8 pt-12 text-[12px] text-ink/60">
+      <span>© 2026 Thomas Associates. All Rights Reserved.</span>
+      <span>Designed &amp; developed by <a href="https://renoble.agency" target="_blank" rel="noopener" class="font-semibold underline underline-offset-4">Renoble</a></span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- Showreel modal -->
+<div class="reel-modal" id="reel" aria-hidden="true">
+  <div class="frame w-full max-w-[1312px]">
+    <div class="flex items-center justify-between text-white mb-5">
+      <p class="flex gap-6 items-baseline"><span class="eyebrow opacity-50" style="font-size:10px">Showreel</span><span class="text-[14px]">Thomas Associates · Weaving the fabric of cities</span></p>
+      <button id="closeReel" class="w-10 h-10 rounded-full bg-white/15 backdrop-blur grid place-items-center text-white" aria-label="Close">✕</button>
+    </div>
+    <div class="relative rounded-[4px] overflow-hidden bg-black aspect-video max-h-[calc(100vh-230px)] mx-auto" style="max-width:calc((100vh - 230px) * 1.7778)">
+      <video id="reelVideo" src="assets/showreel.mp4" playsinline preload="metadata" class="w-full h-full object-cover"></video>
+      <p id="reelCap" class="absolute left-1/2 -translate-x-1/2 bottom-[72px] bg-black/55 text-white text-[15px] px-3 py-1.5 whitespace-nowrap max-w-[92%] overflow-hidden text-ellipsis">“Dedicated to building spaces and structures that are timeless and resilient.”</p>
+      <div class="absolute inset-x-0 bottom-0 px-6 pb-4 pt-10 bg-gradient-to-t from-black/50 to-transparent flex items-center gap-3 text-white text-[12px]">
+        <button class="ctl" id="rPlay" aria-label="Play/Pause">❚❚</button>
+        <button class="ctl" id="rBack" aria-label="Back 10s">↺</button>
+        <button class="ctl" id="rFwd" aria-label="Forward 10s">↻</button>
+        <span id="rCur" class="tabular-nums w-8">0:00</span>
+        <input id="reelBar" type="range" min="0" max="1000" value="0" />
+        <span id="rDur" class="tabular-nums w-8 text-right">0:31</span>
+        <button class="ctl" id="rMute" aria-label="Mute">🔊</button>
+        <button class="ctl" id="rCc" aria-label="Captions">CC</button>
+        <button class="ctl" id="rFull" aria-label="Fullscreen">⛶</button>
+      </div>
+    </div>
+    <div class="flex justify-center gap-3 mt-6">
+      <button class="chap on" data-t="0"><span class="opacity-70 text-[11px]">01</span>Thomas Associates<span class="opacity-70 text-[11px]">0:00</span></button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // lenis smooth scroll
+  const lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
+  (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })(0);
+  document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+    const id = a.getAttribute('href');
+    if (id === '#') { e.preventDefault(); lenis.scrollTo(0, { duration: 1.4 }); return; }
+    const t = document.querySelector(id);
+    if (t) { e.preventDefault(); lenis.scrollTo(t, { duration: 1.4 }); }
+  }));
+
+  // loader
+  { const L = document.getElementById('loader'); const hide = () => L.classList.add('off'); const t = document.getElementById('tower'); const ready = () => setTimeout(hide, 900); if (t.complete) ready(); else t.addEventListener('load', ready); setTimeout(hide, 2500); }
+
+  // starfield
+  document.querySelectorAll('canvas[data-stars]').forEach(cv => {
+    const ctx = cv.getContext('2d');
+    let stars = [];
+    const fit = () => {
+      const r = cv.parentElement.getBoundingClientRect();
+      cv.width = r.width; cv.height = r.height;
+      stars = Array.from({ length: Math.round(r.width * r.height / 9000) }, () => ({ x: Math.random() * cv.width, y: Math.random() * cv.height * .75, r: Math.random() * 1.1 + .3, p: Math.random() * 6 }));
+    };
+    const draw = t => {
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      stars.forEach(s => {
+        ctx.globalAlpha = (.35 + .45 * Math.sin(t / 1400 + s.p)) * (1 - s.y / cv.height);
+        ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 7); ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    };
+    fit(); addEventListener('resize', fit); requestAnimationFrame(draw);
+  });
+
+  // reveal on scroll
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // hero scroll: white card dissolves, revealing the sky
+  const hero = document.getElementById('hero'), card = document.getElementById('heroCard'), ui = document.getElementById('heroUi'), tower = document.getElementById('tower');
+  const onScroll = () => {
+    const max = hero.offsetHeight - innerHeight;
+    const p = Math.min(1, Math.max(0, scrollY / max));
+    const f = Math.min(1, p * 1.6);
+    card.style.opacity = 1 - f;
+    ui.style.opacity = 1 - Math.min(1, p * 2.4);
+    tower.style.transform = `translateX(-50%) translateY(${-p * 120}px) scale(${1 + p * .06})`;
+  };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // count up
+  const co = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return; co.unobserve(e.target);
+    const el = e.target, end = +el.dataset.count, dec = +(el.dataset.dec || 0), pre = el.dataset.pre || '', suf = el.dataset.suf || '';
+    const t0 = performance.now();
+    const step = t => { const k = Math.min(1, (t - t0) / 1600), v = end * (1 - Math.pow(1 - k, 3)); el.textContent = pre + v.toFixed(dec) + suf; if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }), { threshold: .6 });
+  document.querySelectorAll('[data-count]').forEach(el => co.observe(el));
+
+  // showreel modal
+  (() => {
+    const m = document.getElementById('reel'), v = document.getElementById('reelVideo'), $ = id => document.getElementById(id);
+    const fmt = t => Math.floor(t / 60) + ':' + String(Math.floor(t % 60)).padStart(2, '0');
+    const open = () => { m.classList.add('open'); m.setAttribute('aria-hidden', 'false'); v.currentTime = 0; v.play(); lenis.stop(); };
+    const close = () => { m.classList.remove('open'); m.setAttribute('aria-hidden', 'true'); v.pause(); lenis.start(); };
+    $('openReel').onclick = open; $('closeReel').onclick = close;
+    m.addEventListener('click', e => { if (e.target === m) close(); });
+    addEventListener('keydown', e => { if (e.key === 'Escape') close(); if (e.key === ' ' && m.classList.contains('open')) { e.preventDefault(); $('rPlay').click(); } });
+    $('rPlay').onclick = () => v.paused ? v.play() : v.pause();
+    v.onplay = () => $('rPlay').textContent = '❚❚'; v.onpause = () => $('rPlay').textContent = '▶';
+    $('rBack').onclick = () => v.currentTime -= 10; $('rFwd').onclick = () => v.currentTime += 10;
+    v.onloadedmetadata = () => $('rDur').textContent = fmt(v.duration);
+    v.ontimeupdate = () => { $('rCur').textContent = fmt(v.currentTime); $('reelBar').value = v.currentTime / v.duration * 1000; };
+    v.onended = () => $('rPlay').textContent = '▶';
+    $('reelBar').oninput = e => v.currentTime = e.target.value / 1000 * v.duration;
+    $('rMute').onclick = () => { v.muted = !v.muted; $('rMute').textContent = v.muted ? '🔇' : '🔊'; };
+    $('rCc').onclick = () => $('reelCap').classList.toggle('hidden');
+    $('rFull').onclick = () => v.requestFullscreen && v.requestFullscreen();
+    v.onclick = $('rPlay').onclick;
+  })();
+
+  // projects slider (centered)
+  (() => {
+    const total = 7, bar = document.getElementById('projBar');
+    const sw = new Swiper('#projSwiper', {
+      slidesPerView: 'auto', centeredSlides: true, spaceBetween: -60, loop: true, speed: 800, grabCursor: true,
+      autoplay: { delay: 4200, disableOnInteraction: false, pauseOnMouseEnter: true },
+      navigation: { prevEl: '#projPrev', nextEl: '#projNext' },
+      on: { slideChange: s => { bar.style.width = ((s.realIndex + 1) / total * 100) + '%'; } },
+    });
+  })();
+
+  // odometer stats
+  (() => {
+    document.querySelectorAll('.odo').forEach(el => {
+      const digits = el.dataset.to.split('');
+      digits.forEach((d, i) => {
+        const col = document.createElement('span'); col.className = 'd';
+        const strip = document.createElement('i');
+        strip.innerHTML = Array.from({ length: 20 }, (_, k) => '<b>' + (k % 10) + '</b>').join('');
+        strip.dataset.target = (+d + 10); strip.style.transitionDelay = (i * 0.18) + 's';
+        col.appendChild(strip); el.appendChild(col);
+      });
+    });
+    const io2 = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return; io2.unobserve(e.target);
+      e.target.querySelectorAll('.d > i').forEach(strip => { strip.style.transform = 'translateY(-' + strip.dataset.target + 'em)'; });
+    }), { threshold: .5 });
+    document.querySelectorAll('.odo').forEach(el => io2.observe(el));
+  })();
+</script>
+</body>
+</html>
