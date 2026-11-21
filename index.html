@@ -23,8 +23,8 @@ tailwind.config = {
       },
       colors: {
         ink: '#0e0e0c',
-        mist: '#f5f6f8',
-        navy: { 900: '#091b4a', 700: '#133c8c', 500: '#3d6fc0', 300: '#8fafd8', sand: '#c9b9a6' },
+        mist: '#f2f1ea',
+        navy: { 900: '#1a2014', 700: '#2a3121', 500: '#6f7c5c', 300: '#abb899', sand: '#dcd9cb' },
       },
     },
   },
@@ -32,15 +32,15 @@ tailwind.config = {
 </script>
 <style>
   :root {
-    --token-sky-top: #133c8c;   /* abcad622… → 0%   */
-    --token-sky-mid: #3d6fc0;   /* d11ec63e… → 45%  */
-    --token-sky-low: #8fafd8;   /* c4ee5416… → 72%  */
-    --token-sky-sand: #c9b9a6;  /* b0545d74… → 100% */
-    --token-night: #091b4a;
+    --token-sky-top: #474c3d;   /* abcad622… → 0%   */
+    --token-sky-mid: #6f7c5c;   /* d11ec63e… → 45%  */
+    --token-sky-low: #abb899;   /* c4ee5416… → 72%  */
+    --token-sky-sand: #dcd9cb;  /* b0545d74… → 100% */
+    --token-night: #1a2014;
   }
   .bg-sky { background: linear-gradient(180deg, var(--token-sky-top) 0%, var(--token-sky-mid) 45%, var(--token-sky-low) 72%, var(--token-sky-sand) 100%); }
   .bg-sky-footer { background: linear-gradient(180deg, var(--token-sky-top) 0%, var(--token-sky-mid) 50%, var(--token-sky-low) 80%, var(--token-sky-sand) 100%); }
-  .bg-night { background: linear-gradient(180deg, var(--token-night) 0%, var(--token-sky-top) 100%); }
+  .bg-night { background: #474c3d; }
   .reel-ring { position: absolute; inset: 0; border-radius: 999px; background: #d7d7d7; box-shadow: 0 0 30px rgba(14,14,12,.12); animation: ringPulse 2.2s ease-in-out infinite; }
   @keyframes ringPulse { 0%,100% { transform: scale(.94); } 50% { transform: scale(1.04); } }
   .reel-btn { transition: transform .4s cubic-bezier(.2,.7,.2,1); } .reel-btn:hover { transform: scale(1.06); }
@@ -55,9 +55,11 @@ tailwind.config = {
   .proj { --w: min(421px, 84vw); --sc: .78; width: var(--w); opacity: .5; scale: var(--sc); will-change: scale, opacity; translate: 0 0; transition: opacity .7s ease, scale .7s cubic-bezier(.25,.8,.25,1), translate .7s cubic-bezier(.25,.8,.25,1); }
   .proj.swiper-slide-active ~ .proj { translate: calc((1 - var(--sc)) * var(--w) / 2) 0; }
   .proj:has(~ .swiper-slide-active) { translate: calc((1 - var(--sc)) * var(--w) / -2) 0; }
+  /* projects: masonry */
+  .mas { display: flex; gap: 16px; align-items: flex-start; } .mas-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+  @media (min-width: 1024px) { .mas, .mas-col { gap: 20px; } }
   .proj.swiper-slide-active { opacity: 1; scale: 1; z-index: 2; }
   .proj .ph { aspect-ratio: 421/580; }
-  #projSwiper { overflow: visible; } #projSwiper .swiper-wrapper { align-items: center; }
   .odo { display: inline-flex; height: 1em; overflow: hidden; font-variant-numeric: tabular-nums; }
   .odo .d { display: block; height: 1em; overflow: hidden; }
   .odo .d > i { display: block; font-style: normal; transition: transform 2.4s cubic-bezier(.16,1,.3,1); will-change: transform; }
@@ -67,11 +69,10 @@ tailwind.config = {
   html.lenis, html.lenis body { height: auto; }
   .lenis.lenis-smooth { scroll-behavior: auto !important; }
   .lenis.lenis-stopped { overflow: hidden; }
-  body { font-family: 'Geist', sans-serif; color: #0e0e0c; background: #fff; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  body { font-family: 'Geist', sans-serif; color: #0e0e0c; background: #dbd9cb; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
   .h-xl { font-size: clamp(44px, 7.2vw, 104px); line-height: .96; letter-spacing: -0.05em; }
   .h-lg { font-size: clamp(40px, 5.3vw, 76px); line-height: 1.1; letter-spacing: -0.04em; }
   .h-md { font-size: clamp(36px, 4.4vw, 64px); line-height: 1.1; letter-spacing: -0.04em; }
-  .it { font-family: 'Instrument Serif', serif; font-style: italic; letter-spacing: -0.02em; font-weight: 400; }
   .eyebrow { font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 500; }
   .stars { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
   .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
@@ -92,7 +93,7 @@ tailwind.config = {
   .btn { display: inline-flex; align-items: center; gap: 10px; border-radius: 999px; font-size: 14px; font-weight: 500; transition: transform .3s, background .3s; }
   .btn:hover { transform: translateY(-1px); }
   .wordmark { background: linear-gradient(180deg, #fff 10%, rgba(255,255,255,.15) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .loader { position: fixed; inset: 0; z-index: 100; background: linear-gradient(180deg, #0e1b48 0%, #15265c 33%, #193073 66%, #1f3a87 100%); display: grid; place-items: center; transition: opacity .8s ease .2s, visibility .8s ease .2s; }
+  .loader { position: fixed; inset: 0; z-index: 100; background: #474c3d; display: grid; place-items: center; transition: opacity .8s ease .2s, visibility .8s ease .2s; }
   .loader img { width: min(260px, 46vw); height: auto; filter: brightness(0) invert(1); animation: logoIn 1.4s cubic-bezier(.2,.7,.2,1) both; }
   @keyframes logoIn { from { opacity: 0; filter: brightness(0) invert(1) blur(14px); } to { opacity: .9; filter: brightness(0) invert(1) blur(0); } }
   .loader.off { opacity: 0; visibility: hidden; }
@@ -114,7 +115,7 @@ tailwind.config = {
     <p class="absolute top-[24px] inset-x-0 text-center text-[11px] tracking-[.24em] text-white/85 font-medium uppercase px-4">Thomas Associates · Architecture &amp; Workplace Design</p>
 
     <!-- white card -->
-    <div id="heroCard" class="absolute top-[82px] bottom-0 left-4 right-4 lg:left-16 lg:right-16 bg-white">
+    <div id="heroCard" class="absolute top-[82px] bottom-0 left-4 right-4 lg:left-16 lg:right-16 bg-[#dbd9cb]">
       <div class="absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-transparent to-transparent"></div>
 
       <!-- nav -->
@@ -132,13 +133,13 @@ tailwind.config = {
 
       <!-- headline -->
       <h1 class="relative text-center h-xl font-normal mt-[40px] lg:mt-[46px] px-4 max-lg:text-[clamp(38px,11vw,56px)] max-lg:leading-[1.02]" style="text-wrap:balance">
-        Fifty years weaving <br class="hidden lg:block"/>the fabric of <span class="it text-[1.04em]">cities.</span>
+        Fifty years weaving <br class="hidden lg:block"/>the fabric of <span class="">cities.</span>
       </h1>
     </div>
 
     <!-- tower -->
-    <img id="tower" src="assets/tower.png" alt="Tower rising above the city at dusk"
-         class="absolute left-1/2 -translate-x-1/2 top-[200px] max-w-none w-[1420px] lg:w-[2044px] pointer-events-none select-none" />
+    <img id="tower" src="assets/tower-conrad.png" alt="Conrad tower rising at dusk"
+         class="absolute left-1/2 -translate-x-1/2 bottom-0 max-w-none w-auto h-[min(50svh,600px)] pointer-events-none select-none" style="transform-origin:50% 100%" />
 
 
     <div id="heroUi" class="hidden lg:block">
@@ -169,10 +170,10 @@ tailwind.config = {
 </section>
 
 <!-- ============ RESIDENCE ============ -->
-<section id="residence" class="relative bg-white -mt-[40svh] pt-10 pb-24">
+<section id="residence" class="relative bg-[#dbd9cb] -mt-[40svh] pt-10 pb-24">
   <div class="mx-auto max-w-[1440px] px-4 lg:px-16">
     <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 reveal">
-      <h2 class="h-lg" style="font-size:clamp(40px,5.3vw,76px);letter-spacing:-0.04em;">Our <span class="it text-[1.08em]">story</span></h2>
+      <h2 class="h-lg" style="font-size:clamp(40px,5.3vw,76px);letter-spacing:-0.04em;">Our <span class="">story</span></h2>
       <div class="lg:w-[460px] pb-3">
         <p class="text-[14px] leading-[19px] text-ink/60">A father-and-son practice, led from the same Bengaluru studio. Ideas are tested around one table with the whole team before they reach a client. Every commission is shaped by its site, its climate and the people who will use it. We treat each brief as a conversation, and each handover as the start of a long relationship with the building.</p>
         <a href="#" class="inline-flex items-center gap-2 mt-4 text-[14px] font-medium">Meet the studio <i class="ri-arrow-right-up-line text-[18px] leading-none"></i></a>
@@ -204,7 +205,7 @@ tailwind.config = {
   <canvas class="stars" data-stars></canvas>
   <div class="relative mx-auto max-w-[1440px] px-4 lg:px-16">
     <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 reveal">
-      <h2 class="h-lg">Always as good as<br/>our <span class="it text-[1.08em]">next project.</span></h2>
+      <h2 class="h-lg">Always as good as<br/>our <span class="">next project.</span></h2>
       <div class="lg:w-[380px] pb-3">
         <p class="text-[14px] leading-[19px] text-white/60">Buildings, hotels and campuses designed for some of South India’s leading developers and technology firms.</p>
         <a href="#" class="inline-flex items-center gap-2 mt-4 text-[14px] font-medium">All projects <i class="ri-arrow-right-up-line text-[18px] leading-none"></i></a>
@@ -212,101 +213,101 @@ tailwind.config = {
     </div>
   </div>
 
-  <div class="relative mt-20 pb-12 reveal">
-    <div class="swiper py-6" id="projSwiper">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide proj">
-          <a href="#" class="block">
-            <div class="ph relative overflow-hidden rounded-[6px]">
-              <img src="assets/monument.jpg" alt="UB City" class="w-full h-full object-cover" />
-              <span class="absolute top-4 left-4 rounded-full bg-white text-ink px-3 py-1 eyebrow" style="letter-spacing:.12em">Landmark</span>
-              <span class="absolute top-4 right-4 text-white/80 text-[12px] tabular-nums">01 / 07</span>
-            </div>
-            <div class="mt-5"><h3 class="text-[26px] leading-[31px] tracking-[-0.03em]">UB City</h3>
-              <p class="text-[14px] text-white/60 mt-1">Bengaluru</p></div>
-          </a>
+  <div class="relative mx-auto max-w-[1440px] px-4 lg:px-16 mt-16">
+    <div class="mas">
+      <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="1.6438">
+        <img src="assets/projects/p01.png" alt="Landmark Tower" width="626" height="1029" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Landmark Tower</h3>
         </div>
-        <div class="swiper-slide proj">
-          <a href="#" class="block">
-            <div class="ph relative overflow-hidden rounded-[6px]">
-              <img src="assets/aurelia.jpg" alt="Kingfisher Tower" class="w-full h-full object-cover" />
-              <span class="absolute top-4 left-4 rounded-full bg-white text-ink px-3 py-1 eyebrow" style="letter-spacing:.12em">Landmark</span>
-              <span class="absolute top-4 right-4 text-white/80 text-[12px] tabular-nums">02 / 07</span>
-            </div>
-            <div class="mt-5"><h3 class="text-[26px] leading-[31px] tracking-[-0.03em]">Kingfisher Tower</h3>
-              <p class="text-[14px] text-white/60 mt-1">Bengaluru</p></div>
-          </a>
+      </a>
+      <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="0.6161">
+        <img src="assets/projects/p02.png" alt="Palace Hotel Lobby" width="896" height="552" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Palace Hotel Lobby</h3>
         </div>
-        <div class="swiper-slide proj">
-          <a href="#" class="block">
-            <div class="ph relative overflow-hidden rounded-[6px]">
-              <img src="assets/tashkent.jpg" alt="Residential Skyscrapers" class="w-full h-full object-cover" />
-              <span class="absolute top-4 left-4 rounded-full bg-white text-ink px-3 py-1 eyebrow" style="letter-spacing:.12em">Residential</span>
-              <span class="absolute top-4 right-4 text-white/80 text-[12px] tabular-nums">03 / 07</span>
-            </div>
-            <div class="mt-5"><h3 class="text-[26px] leading-[31px] tracking-[-0.03em]">Residential Skyscrapers</h3>
-              <p class="text-[14px] text-white/60 mt-1">For leading developers</p></div>
-          </a>
+      </a>
+      <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="1.6475">
+        <img src="assets/projects/p03.png" alt="Novotel" width="627" height="1033" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Novotel</h3>
         </div>
-        <div class="swiper-slide proj">
-          <a href="#" class="block">
-            <div class="ph relative overflow-hidden rounded-[6px]">
-              <img src="assets/residence.jpg" alt="The Leela Palace Hotel &amp; Residences" class="w-full h-full object-cover" />
-              <span class="absolute top-4 left-4 rounded-full bg-white text-ink px-3 py-1 eyebrow" style="letter-spacing:.12em">Hospitality</span>
-              <span class="absolute top-4 right-4 text-white/80 text-[12px] tabular-nums">04 / 07</span>
-            </div>
-            <div class="mt-5"><h3 class="text-[26px] leading-[31px] tracking-[-0.03em]">The Leela Palace Hotel &amp; Residences</h3>
-              <p class="text-[14px] text-white/60 mt-1">Hotel and residences</p></div>
-          </a>
+      </a>
+      <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="0.7057">
+        <img src="assets/projects/p04.png" alt="Tech Campus" width="887" height="626" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Tech Campus</h3>
         </div>
-        <div class="swiper-slide proj">
-          <a href="#" class="block">
-            <div class="ph relative overflow-hidden rounded-[6px]">
-              <img src="assets/facade.jpg" alt="ITC Kohenur" class="w-full h-full object-cover" />
-              <span class="absolute top-4 left-4 rounded-full bg-white text-ink px-3 py-1 eyebrow" style="letter-spacing:.12em">Hospitality</span>
-              <span class="absolute top-4 right-4 text-white/80 text-[12px] tabular-nums">05 / 07</span>
-            </div>
-            <div class="mt-5"><h3 class="text-[26px] leading-[31px] tracking-[-0.03em]">ITC Kohenur</h3>
-              <p class="text-[14px] text-white/60 mt-1">Hotel</p></div>
-          </a>
+      </a>
+      <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="0.7043">
+        <img src="assets/projects/p05.png" alt="Intel Reception" width="886" height="624" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Intel Reception</h3>
         </div>
-        <div class="swiper-slide proj">
-          <a href="#" class="block">
-            <div class="ph relative overflow-hidden rounded-[6px]">
-              <img src="assets/rooftop.jpg" alt="Taj Vivanta" class="w-full h-full object-cover" />
-              <span class="absolute top-4 left-4 rounded-full bg-white text-ink px-3 py-1 eyebrow" style="letter-spacing:.12em">Hospitality</span>
-              <span class="absolute top-4 right-4 text-white/80 text-[12px] tabular-nums">06 / 07</span>
-            </div>
-            <div class="mt-5"><h3 class="text-[26px] leading-[31px] tracking-[-0.03em]">Taj Vivanta</h3>
-              <p class="text-[14px] text-white/60 mt-1">Hotel</p></div>
-          </a>
+      </a>
+      <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="0.7040">
+        <img src="assets/projects/p06.png" alt="Residential Development" width="885" height="623" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Residential Development</h3>
         </div>
-        <div class="swiper-slide proj">
-          <a href="#" class="block">
-            <div class="ph relative overflow-hidden rounded-[6px]">
-              <img src="assets/dubai.jpg" alt="Tech Parks &amp; IT Campuses" class="w-full h-full object-cover" />
-              <span class="absolute top-4 left-4 rounded-full bg-white text-ink px-3 py-1 eyebrow" style="letter-spacing:.12em">Workplace</span>
-              <span class="absolute top-4 right-4 text-white/80 text-[12px] tabular-nums">07 / 07</span>
-            </div>
-            <div class="mt-5"><h3 class="text-[26px] leading-[31px] tracking-[-0.03em]">Tech Parks &amp; IT Campuses</h3>
-              <p class="text-[14px] text-white/60 mt-1">For leading technology firms</p></div>
-          </a>
+      </a>
+      <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="0.6163">
+        <img src="assets/projects/p07.png" alt="Residential Apartments" width="894" height="551" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Residential Apartments</h3>
         </div>
-      </div>
-    </div>
-    <div class="relative mx-auto max-w-[1440px] px-4 lg:px-16 mt-12 flex items-center justify-center gap-6">
-      <button id="projPrev" class="w-11 h-11 rounded-full border border-white/30 grid place-items-center hover:bg-white/10 transition" aria-label="Previous"><i class="ri-arrow-left-line text-[20px] leading-none"></i></button>
-      <div class="w-[200px] h-[2px] bg-white/20 relative overflow-hidden rounded"><i id="projBar" class="absolute inset-y-0 left-0 bg-white rounded transition-all duration-500" style="width:14.3%"></i></div>
-      <button id="projNext" class="w-11 h-11 rounded-full border border-white/30 grid place-items-center hover:bg-white/10 transition" aria-label="Next"><i class="ri-arrow-right-line text-[20px] leading-none"></i></button>
+      </a>
+      <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="1.6497">
+        <img src="assets/projects/p08.png" alt="Corporate Tower" width="628" height="1036" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Corporate Tower</h3>
+        </div>
+      </a>
+      <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="0.6186">
+        <img src="assets/projects/p09.png" alt="Business Park" width="894" height="553" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Business Park</h3>
+        </div>
+      </a>
+      <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="1.6459">
+        <img src="assets/projects/p10.png" alt="Retail &amp; Mall" width="627" height="1032" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Retail &amp; Mall</h3>
+        </div>
+      </a>
+      <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="0.7065">
+        <img src="assets/projects/p11.png" alt="Podium Terrace" width="886" height="626" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Podium Terrace</h3>
+        </div>
+      </a>
+      <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="1.2500">
+        <img src="assets/projects/p12.jpg" alt="Hotel Arcade" width="1200" height="1500" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Hotel Arcade</h3>
+        </div>
+      </a>
+      <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="0.7054">
+        <img src="assets/projects/p13.png" alt="Golf Course" width="886" height="625" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Golf Course</h3>
+        </div>
+      </a>
+      <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="0.6134">
+        <img src="assets/projects/p14.png" alt="Glass Pyramid Roof" width="895" height="549" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Glass Pyramid Roof</h3>
+        </div>
+      </a>
     </div>
   </div>
 </section>
 
 <!-- ============ SERVICES ============ -->
-<section id="services" class="bg-white py-[120px]">
+<section id="services" class="bg-[#dbd9cb] py-[120px]">
   <div class="mx-auto max-w-[1440px] px-4 lg:px-16">
     <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 reveal">
-      <h2 class="h-lg">Our <span class="it text-[1.08em]">services</span></h2>
+      <h2 class="h-lg">Our <span class="">services</span></h2>
       <div class="lg:w-[380px] pb-3">
         <p class="text-[14px] leading-[20px] text-ink/60">Six core disciplines, from the city plan to the interior. Each is led by specialists inside the studio, so a project is designed, coordinated and delivered under one roof.</p>
         <a href="#contact" class="inline-flex items-center gap-2 mt-4 text-[14px] font-medium">Enquire <i class="ri-arrow-right-up-line text-[18px] leading-none"></i></a>
@@ -351,7 +352,7 @@ tailwind.config = {
 <section id="stats" style="font-family:'Poppins',sans-serif" class="relative overflow-hidden bg-night text-white py-[70px]">
   <canvas class="stars" data-stars></canvas>
   <div class="relative mx-auto max-w-[1440px] px-4 lg:px-16">
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-8 lg:gap-x-12 gap-y-14">
+    <div class="grid grid-cols-2 lg:flex lg:justify-between gap-x-8 lg:gap-x-12 gap-y-14">
       <div class="stat reveal">
         <p class="odo-wrap text-[clamp(44px,5.8vw,86px)] leading-none tracking-[-0.05em] whitespace-nowrap"><span class="odo" data-to="2000" aria-label="2000+"></span><span class="odo-suf">+</span></p>
         <p class="mt-6 text-[13px] leading-[19px] text-white/60 uppercase tracking-[.1em]">Projects</p>
@@ -373,10 +374,10 @@ tailwind.config = {
 </section>
 
 <!-- ============ IN THE NEWS ============ -->
-<section id="news" class="bg-white py-[120px]">
+<section id="news" class="bg-[#dbd9cb] py-[120px]">
   <div class="mx-auto max-w-[1440px] px-4 lg:px-16 grid lg:grid-cols-[1fr_533px] gap-10 lg:gap-[120px] items-start">
     <div class="reveal order-2 lg:order-1">
-      <h2 class="h-lg">In the <span class="it text-[1.08em]">news</span></h2>
+      <h2 class="h-lg">In the <span class="">news</span></h2>
       <p class="mt-8 text-[22px] leading-[30px] tracking-[-0.02em] text-ink/70 max-w-[560px]">Article published by ITP Media Group &amp; Architect and Interiors India.</p>
       <div class="mt-8 space-y-6 text-[15px] leading-[24px] text-ink/60 max-w-[620px]">
         <p>“As I sit here, in my studio, I was reflecting on the lengthy path to this room, this office, this city and this wonderful profession of architecture. Five decades later, being in the same line, how is it possible to be still vitally interested, still keen to create, still keen to put dreams to reality,” muses Architect TM Thomas, the man who established his Architectural practice in the early 1970’s.</p>
@@ -395,7 +396,7 @@ tailwind.config = {
 <section id="contact" class="relative overflow-hidden text-white text-center bg-night">
   <canvas class="stars" data-stars></canvas>
   <div class="relative px-4 pt-[190px] pb-[130px]">
-    <h2 class="h-xl reveal">Let’s design what<br/><span class="it text-[1.04em]">comes next.</span></h2>
+    <h2 class="h-xl reveal">Let’s design what<br/><span class="">comes next.</span></h2>
     <p class="mt-10 text-[16px] text-white/85">You can contact us for more information.</p>
     <div class="mt-8 flex flex-wrap justify-center gap-3">
       <a href="mailto:enquiries@thomassociates.com" class="btn bg-white text-ink h-[40px] px-5 text-[14px]">New Business Enquiries</a>
@@ -405,7 +406,7 @@ tailwind.config = {
 </section>
 
 <!-- ============ FOOTER ============ -->
-<footer class="relative overflow-hidden text-white bg-sky-footer">
+<footer class="relative overflow-hidden text-white bg-[#2a3121]">
   <div class="relative mx-auto max-w-[1440px] px-4 lg:px-16 pt-[110px]">
     <div class="grid lg:grid-cols-[1fr_auto] gap-16">
       <div>
@@ -430,7 +431,7 @@ tailwind.config = {
 
     <p class="wordmark font-display text-center leading-none select-none mt-16 lg:mt-10 whitespace-nowrap" style="font-size:clamp(64px,16.6vw,240px);letter-spacing:.02em">THOMAS</p>
 
-    <div class="flex flex-col items-center text-center gap-3 md:flex-row md:justify-between md:text-left pb-8 pt-12 text-[12px] text-ink/60">
+    <div class="flex flex-col items-center text-center gap-3 md:flex-row md:justify-between md:text-left pb-8 pt-12 text-[12px] text-white/60">
       <span>© 2026 Thomas Associates. All Rights Reserved.</span>
       <span>Designed &amp; developed by <a href="https://renoble.agency" target="_blank" rel="noopener" class="font-semibold underline underline-offset-4">Renoble</a></span>
     </div>
@@ -512,7 +513,7 @@ tailwind.config = {
     const f = Math.min(1, p * 1.6);
     card.style.opacity = 1 - f;
     ui.style.opacity = 1 - Math.min(1, p * 2.4);
-    tower.style.transform = `translateX(-50%) translateY(${-p * 120}px) scale(${1 + p * .06})`;
+    tower.style.transform = `translateX(-50%) scale(${1 + p * .6})`;
   };
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
@@ -548,15 +549,31 @@ tailwind.config = {
     v.onclick = $('rPlay').onclick;
   })();
 
-  // projects slider (centered)
+  // projects masonry: pack cards into columns, then trim so every column ends at the same height
   (() => {
-    const total = 7, bar = document.getElementById('projBar');
-    const sw = new Swiper('#projSwiper', {
-      slidesPerView: 'auto', centeredSlides: true, spaceBetween: -60, breakpoints: { 0: { spaceBetween: -24 }, 768: { spaceBetween: -60 } }, loop: true, speed: 800, grabCursor: true,
-      autoplay: { delay: 4200, disableOnInteraction: false, pauseOnMouseEnter: true },
-      navigation: { prevEl: '#projPrev', nextEl: '#projNext' },
-      on: { slideChange: s => { bar.style.width = ((s.realIndex + 1) / total * 100) + '%'; } },
-    });
+    const box = document.querySelector('.mas'); if (!box) return;
+    const items = [...box.querySelectorAll('.mas-item')];
+    const build = () => {
+      const n = innerWidth >= 1024 ? 3 : innerWidth >= 640 ? 2 : 1;
+      const gap = innerWidth >= 1024 ? 20 : 16;
+      const colW = (box.clientWidth - gap * (n - 1)) / n;
+      const cols = Array.from({ length: n }, () => ({ el: document.createElement('div'), items: [], h: 0 }));
+      items.forEach(it => { it.style.height = ''; });
+      items.forEach(it => {
+        const c = cols.reduce((a, b) => (b.h < a.h ? b : a));
+        const ih = colW * parseFloat(it.dataset.r);
+        c.items.push([it, ih]); c.h += ih + (c.items.length > 1 ? gap : 0);
+      });
+      const target = Math.min(...cols.map(c => c.h));
+      box.innerHTML = '';
+      cols.forEach(c => {
+        c.el.className = 'mas-col';
+        const gaps = gap * (c.items.length - 1), k = n === 1 ? 1 : (target - gaps) / (c.h - gaps);
+        c.items.forEach(([it, ih]) => { it.style.height = Math.round(ih * k) + 'px'; c.el.appendChild(it); });
+        box.appendChild(c.el);
+      });
+    };
+    build(); let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(build, 150); });
   })();
 
   // odometer stats
