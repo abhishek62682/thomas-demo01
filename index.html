@@ -6,12 +6,14 @@
 <title>Thomas Associates Architects | Architecture & Workplace Design, Bengaluru</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=Cinzel:wght@400;500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=Cinzel:wght@400;500&family=Poppins:wght@300;400;500&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css" />
 <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
 <script>
 tailwind.config = {
   theme: {
@@ -20,6 +22,7 @@ tailwind.config = {
         sans: ['Geist', 'Inter', 'sans-serif'],
         serif: ['"Instrument Serif"', 'serif'],
         display: ['Cinzel', 'serif'],
+        secondary: ['Barlow', 'sans-serif'],
       },
       colors: {
         ink: '#0e0e0c',
@@ -60,16 +63,23 @@ tailwind.config = {
   @media (min-width: 1024px) { .mas, .mas-col { gap: 20px; } }
   .proj.swiper-slide-active { opacity: 1; scale: 1; z-index: 2; }
   .proj .ph { aspect-ratio: 421/580; }
+  #svcTrack::-webkit-scrollbar { display: none; }
   .odo { display: inline-flex; height: 1em; overflow: hidden; font-variant-numeric: tabular-nums; }
   .odo .d { display: block; height: 1em; overflow: hidden; }
   .odo .d > i { display: block; font-style: normal; transition: transform 2.4s cubic-bezier(.16,1,.3,1); will-change: transform; }
   .odo .d > i > b { display: block; height: 1em; font-weight: 400; }
+  #stats .odo-suf { color: rgba(14,14,12,.6); }
   #stats .odo-wrap { font-weight: 400; display: flex; align-items: flex-start; flex-wrap: nowrap; }
   .odo-suf { font-family: inherit; font-weight: 300; letter-spacing: -0.02em; margin-left: .04em; color: rgba(255,255,255,.7); }
   html.lenis, html.lenis body { height: auto; }
   .lenis.lenis-smooth { scroll-behavior: auto !important; }
   .lenis.lenis-stopped { overflow: hidden; }
+  .desc { font-family: 'Barlow', sans-serif; font-size: 16px; line-height: 28px; font-weight: 400; }
+  @media (min-width: 1024px) { .desc { font-size: 20px; line-height: 34px; } }
+  .desc.desc-sm { font-size: 18px; line-height: 29px; }
+  p, address, dd, dt { font-family: 'Barlow', sans-serif; }
   body { font-family: 'Geist', sans-serif; color: #0e0e0c; background: #dbd9cb; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  @media (min-width: 1024px) and (max-width: 1440px) { #tower { height: min(46svh, 540px) !important; } }
   .h-xl { font-size: clamp(44px, 7.2vw, 104px); line-height: .96; letter-spacing: -0.05em; }
   .h-lg { font-size: clamp(40px, 5.3vw, 76px); line-height: 1.1; letter-spacing: -0.04em; }
   .h-md { font-size: clamp(36px, 4.4vw, 64px); line-height: 1.1; letter-spacing: -0.04em; }
@@ -81,7 +91,7 @@ tailwind.config = {
   .zoom:hover img { transform: scale(1.05); }
   @media (max-width: 767px) {
     .proj { --sc: .88; }
-    .btn { min-height: 50px !important; height: auto !important; padding-left: 26px !important; padding-right: 26px !important; font-size: 16px !important; }
+    .btn { min-height: 50px !important; height: auto !important; padding-left: 26px !important; padding-right: 26px !important; font-size: 18px !important; }
     .btn.pr-2 { padding-right: 8px !important; }
     .text-\[14px\] { font-size: 16px !important; line-height: 1.5 !important; }
     .text-\[13px\] { font-size: 15px !important; }
@@ -90,7 +100,7 @@ tailwind.config = {
     #residence aside { padding: 28px !important; }
     #residence aside .text-\[52px\] { font-size: 44px !important; line-height: 48px !important; }
   }
-  .btn { display: inline-flex; align-items: center; gap: 10px; border-radius: 999px; font-size: 14px; font-weight: 500; transition: transform .3s, background .3s; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; border-radius: 999px; font-size: 16px !important; font-weight: 500; transition: transform .3s, background .3s; }
   .btn:hover { transform: translateY(-1px); }
   .wordmark { background: linear-gradient(180deg, #fff 10%, rgba(255,255,255,.15) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .loader { position: fixed; inset: 0; z-index: 100; background: #474c3d; display: grid; place-items: center; transition: opacity .8s ease .2s, visibility .8s ease .2s; }
@@ -109,16 +119,18 @@ tailwind.config = {
 
 <!-- ============ HERO ============ -->
 <section id="hero" class="relative h-[240svh]">
-  <div class="sticky top-0 h-[100svh] min-h-[600px] overflow-hidden bg-sky">
+  <div id="heroSticky" class="sticky top-0 h-[100svh] min-h-[700px] overflow-hidden bg-sky">
     <canvas class="stars" data-stars></canvas>
 
     <p class="absolute top-[24px] inset-x-0 text-center text-[11px] tracking-[.24em] text-white/85 font-medium uppercase px-4">Thomas Associates · Architecture &amp; Workplace Design</p>
 
+    <div id="heroStage" class="absolute inset-x-0 top-0" style="height:100%">
     <!-- white card -->
     <div id="heroCard" class="absolute top-[82px] bottom-0 left-4 right-4 lg:left-16 lg:right-16 bg-[#dbd9cb]">
       <div class="absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-transparent to-transparent"></div>
 
       <!-- nav -->
+      <div class="relative mx-auto w-full max-w-[1760px]">
       <header class="relative flex items-center justify-between px-8 pt-[27px]">
         <a href="#" class="flex items-center"><img src="assets/client-logo.svg" alt="Client logo" class="h-[42px] w-auto" /></a>
         <nav class="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center text-[14px]">
@@ -128,23 +140,24 @@ tailwind.config = {
           <a href="#residence" class="px-4 h-8 grid place-items-center">Our Story</a>
           <a href="#news" class="px-4 h-8 grid place-items-center">News</a>
         </nav>
-        <a href="#contact" class="btn border border-black/15 h-[34px] px-4 text-[13px]">Contact <i class="ri-arrow-right-line text-[18px] leading-none"></i></a>
+        <a href="#contact" class="btn border border-black/15 h-[46px] px-6">Contact <i class="ri-arrow-right-line text-[18px] leading-none"></i></a>
       </header>
 
       <!-- headline -->
       <h1 class="relative text-center h-xl font-normal mt-[40px] lg:mt-[46px] px-4 max-lg:text-[clamp(38px,11vw,56px)] max-lg:leading-[1.02]" style="text-wrap:balance">
         Fifty years weaving <br class="hidden lg:block"/>the fabric of <span class="">cities.</span>
       </h1>
+      </div>
     </div>
 
     <!-- tower -->
     <img id="tower" src="assets/tower-conrad.png" alt="Conrad tower rising at dusk"
-         class="absolute left-1/2 -translate-x-1/2 bottom-0 max-w-none w-auto h-[min(50svh,600px)] pointer-events-none select-none" style="transform-origin:50% 100%" />
+         class="absolute left-1/2 -translate-x-1/2 bottom-0 max-w-none w-auto h-[48svh] sm:h-[54svh] lg:h-[min(55svh,680px)] pointer-events-none select-none" style="transform-origin:50% 100%" />
 
 
-    <div id="heroUi" class="hidden lg:block">
+    <div id="heroUi" class="hidden lg:block absolute bottom-0 left-1/2 -translate-x-1/2 w-[1440px] h-[900px] pointer-events-none"><div class="relative w-full h-full pointer-events-auto">
       <!-- birds -->
-      <img src="assets/birds.png" alt="" class="absolute pointer-events-none select-none" style="left:calc(50% + 213px);top:487px;width:162px;height:auto;animation:bird 6s ease-in-out infinite" />
+      <img src="assets/birds.png" alt="" class="absolute pointer-events-none select-none" style="left:933px;top:487px;width:162px;height:auto;animation:bird 6s ease-in-out infinite" />
       <!-- left -->
       <div class="absolute left-[150px] top-[545px] flex items-center gap-[22px] text-[11px] font-medium uppercase tracking-[.2em]">
         <span>Watch</span>
@@ -155,148 +168,153 @@ tailwind.config = {
         </button>
         <span>Showreel</span>
       </div>
-      <p class="absolute left-[150px] top-[672px] w-[300px] text-[13px] leading-[19.5px] text-ink/60">A design firm building spaces and structures that are timeless and resilient.</p>
-      <a href="#residence" class="btn absolute left-[150px] top-[728px] bg-ink text-white h-[50px] pl-6 pr-2 gap-5">Explore Our Work <span class="w-[34px] h-[34px] rounded-full bg-white text-ink grid place-items-center"><i class="ri-arrow-right-line text-[18px] leading-none"></i></span></a>
+      <p class="absolute left-[150px] top-[660px] w-[330px] desc desc-sm text-ink/60">A design firm building spaces and structures that are timeless and resilient.</p>
+      <a href="#residence" class="btn absolute left-[150px] top-[772px] bg-ink text-white h-[58px] pl-8 pr-2 gap-5">Explore Our Work <span class="w-[44px] h-[44px] rounded-full bg-white text-ink grid place-items-center"><i class="ri-arrow-right-line text-[18px] leading-none"></i></span></a>
 
-      <!-- right -->
-      <div class="absolute" style="left:calc(50% + 28px);top:648px;width:140px;height:1px;background:rgba(255,255,255,.7)"><i class="absolute -left-[4px] -top-[3px] w-[7px] h-[7px] rounded-full bg-white"></i></div>
-      <div class="absolute left-[888px] top-[634px]">
-        <p class="text-[10px] font-semibold tracking-[.14em] text-ink">THOMAS ASSOCIATES</p>
-        <p class="text-[12px] text-ink/60 mt-1">Architects &amp; workplace designers</p>
+      <!-- right: pointer + text as one block -->
+      <div class="absolute flex items-center gap-[10px]" style="left:748px;top:634px">
+        <span class="relative block shrink-0" style="width:140px;height:2px;background:#0e0e0c;box-shadow:0 0 0 1px rgba(255,255,255,.9)"><i class="absolute -left-[4px] -top-[3px] w-[8px] h-[8px] rounded-full bg-[#0e0e0c]" style="box-shadow:0 0 0 1px rgba(255,255,255,.9)"></i></span>
+        <div>
+          <p class="text-[16px] leading-[22px] font-semibold tracking-[.14em] text-ink">THOMAS ASSOCIATES</p>
+          <p class="desc desc-sm text-ink/60 mt-1">Architects &amp; workplace designers</p>
+        </div>
       </div>
-      <p class="absolute left-[1030px] top-[720px] w-[260px] text-[11px] tracking-[.06em] leading-[16.5px] uppercase text-ink">Father and son, one studio, shaping the skyline of Bengaluru for over five decades.</p>
+      <p class="absolute left-[980px] top-[728px] w-[340px] desc desc-sm text-ink/80">Father and son, one studio, shaping the skyline of Bengaluru for over five decades.</p>
+    </div></div>
     </div>
   </div>
 </section>
 
 <!-- ============ RESIDENCE ============ -->
-<section id="residence" class="relative bg-[#dbd9cb] -mt-[40svh] pt-10 pb-24">
-  <div class="mx-auto max-w-[1440px] px-4 lg:px-16">
-    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 reveal">
-      <h2 class="h-lg" style="font-size:clamp(40px,5.3vw,76px);letter-spacing:-0.04em;">Our <span class="">story</span></h2>
-      <div class="lg:w-[460px] pb-3">
-        <p class="text-[14px] leading-[19px] text-ink/60">A father-and-son practice, led from the same Bengaluru studio. Ideas are tested around one table with the whole team before they reach a client. Every commission is shaped by its site, its climate and the people who will use it. We treat each brief as a conversation, and each handover as the start of a long relationship with the building.</p>
-        <a href="#" class="inline-flex items-center gap-2 mt-4 text-[14px] font-medium">Meet the studio <i class="ri-arrow-right-up-line text-[18px] leading-none"></i></a>
+<section id="residence" class="relative bg-[#dbd9cb] text-ink -mt-[40svh] pt-[120px] lg:pt-[160px] pb-[100px] lg:pb-[140px]">
+  <div class="mx-auto max-w-[1760px] px-6 lg:px-12">
+    <div class="grid lg:grid-cols-[minmax(0,460px)_minmax(0,620px)] lg:justify-center gap-10 lg:gap-24 items-center reveal">
+      <div class="zoom relative overflow-hidden"><img src="assets/cta-bg2.webp" alt="Thomas Associates architecture" class="w-full h-auto lg:aspect-[800/970] object-cover" /><div class="absolute inset-0 bg-[#2a3121]/45 pointer-events-none"></div></div>
+      <div>
+        <p class="text-[14px] font-bold tracking-[.25em] uppercase text-[#28421d]">Our Story</p>
+        <h2 class="text-[#28421d] h-lg mt-5" style="font-size:clamp(30px,3vw,46px)">Rooted in place, <span class="">built for people.</span></h2>
+        <p class="desc mt-6 text-ink/60">Founded by TM Thomas in the early 1970s and joined by his son Tilak Thomas in 1999, Thomas Associates has shaped the skyline of Bengaluru for over five decades, from landmark towers and hotels to tech parks and campuses for South India’s leading developers.</p>
+        <p class="desc mt-4 text-ink/60">Every idea is tested around one table with the whole team before it reaches a client. Each commission is shaped by its site, its climate and the people who will use it, and each handover is the start of a long relationship with the building.</p>
       </div>
     </div>
 
-    <div class="grid lg:grid-cols-[880px_1fr] gap-6 mt-14 reveal">
-      <div class="zoom overflow-hidden rounded-[6px] aspect-[880/620]"><img src="assets/residence.jpg" alt="Thomas Associates studio, Bengaluru" class="w-full h-full object-cover" /></div>
-      <aside class="bg-mist rounded-[6px] p-10 flex flex-col">
-        <span class="self-start rounded-full border border-black/20 px-3 py-[3px] text-[10px] font-medium tracking-[.14em] uppercase bg-white/60">Our story</span>
-        <p class="mt-6 text-[14px] leading-[20px] text-ink/60 max-w-[320px]">Two generations of architects, sharing one design philosophy and one simple question behind every project: who is it for?</p>
-        <dl class="mt-9 text-[14px]">
-          <div class="flex justify-between py-[13px] border-t border-black/10"><dt class="text-ink/60">Founder</dt><dd class="font-medium text-right">TM Thomas, early 1970s</dd></div>
-          <div class="flex justify-between py-[13px] border-t border-black/10"><dt class="text-ink/60">Joined by</dt><dd class="font-medium text-right">Tilak Thomas, 1999</dd></div>
-          <div class="flex justify-between py-[13px] border-t border-black/10"><dt class="text-ink/60">Based in</dt><dd class="font-medium text-right">Bengaluru, India</dd></div>
-        </dl>
-        <div class="mt-auto pt-10 flex gap-3">
-          <a href="#services" class="btn bg-ink text-white h-[44px] px-6">Core services</a>
-          <a href="#contact" class="btn border border-black/20 h-[44px] px-6">Get in touch</a>
+    <div id="stats" class="mt-16 lg:mt-20 grid grid-cols-2 lg:grid-cols-4 gap-y-10 max-w-[1240px] mx-auto">
+        <div class="stat reveal text-center px-6 ">
+          <p class="odo-wrap justify-center text-[clamp(36px,3.6vw,56px)] leading-none tracking-[-0.05em] whitespace-nowrap font-light"><span class="odo" data-to="2000" aria-label="2000+"></span><span class="odo-suf">+</span></p>
+          <p class="mt-4 text-[14px] leading-[21px] text-ink/50 mx-auto">Projects designed and<br/>delivered across South India</p>
         </div>
-      </aside>
+        <div class="stat reveal text-center px-6 lg:border-l border-black/15">
+          <p class="odo-wrap justify-center text-[clamp(36px,3.6vw,56px)] leading-none tracking-[-0.05em] whitespace-nowrap font-light"><span class="odo" data-to="200" aria-label="200+"></span><span class="odo-suf">+</span></p>
+          <p class="mt-4 text-[14px] leading-[21px] text-ink/50 mx-auto">Million sq ft of<br/>completed projects</p>
+        </div>
+        <div class="stat reveal text-center px-6 lg:border-l border-black/15">
+          <p class="odo-wrap justify-center text-[clamp(36px,3.6vw,56px)] leading-none tracking-[-0.05em] whitespace-nowrap font-light"><span class="odo" data-to="70" aria-label="70+"></span><span class="odo-suf">+</span></p>
+          <p class="mt-4 text-[14px] leading-[21px] text-ink/50 mx-auto">Architects and designers<br/>in the studio</p>
+        </div>
+        <div class="stat reveal text-center px-6 lg:border-l border-black/15">
+          <p class="odo-wrap justify-center text-[clamp(36px,3.6vw,56px)] leading-none tracking-[-0.05em] whitespace-nowrap font-light"><span class="odo" data-to="45" aria-label="45+"></span><span class="odo-suf">+</span></p>
+          <p class="mt-4 text-[14px] leading-[21px] text-ink/50 mx-auto">Million sq ft of<br/>projects in progress</p>
+        </div>
     </div>
-
   </div>
 </section>
 
 <!-- ============ PROJECTS ============ -->
-<section id="developments" class="relative overflow-hidden text-white pt-[160px] pb-[140px] bg-night">
+<section id="developments" class="relative overflow-hidden text-white pt-[160px] pb-[140px] bg-[#2a3121]">
   <canvas class="stars" data-stars></canvas>
-  <div class="relative mx-auto max-w-[1440px] px-4 lg:px-16">
+  <div class="relative mx-auto max-w-[1760px] px-6 lg:px-12">
     <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 reveal">
-      <h2 class="h-lg">Always as good as<br/>our <span class="">next project.</span></h2>
-      <div class="lg:w-[380px] pb-3">
-        <p class="text-[14px] leading-[19px] text-white/60">Buildings, hotels and campuses designed for some of South India’s leading developers and technology firms.</p>
-        <a href="#" class="inline-flex items-center gap-2 mt-4 text-[14px] font-medium">All projects <i class="ri-arrow-right-up-line text-[18px] leading-none"></i></a>
+      <h2 class="h-lg">Our <span class="">projects</span></h2>
+      <div class="lg:w-[460px] pb-3">
+        <p class="desc text-white/60">Buildings, hotels and campuses designed for some of South India’s leading developers and technology firms.</p>
       </div>
     </div>
   </div>
 
-  <div class="relative mx-auto max-w-[1440px] px-4 lg:px-16 mt-16">
+  <div class="relative mx-auto max-w-[1760px] px-6 lg:px-12 mt-16">
     <div class="mas">
       <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="1.6438">
-        <img src="assets/projects/p01.png" alt="Landmark Tower" width="626" height="1029" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
-        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
-          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Landmark Tower</h3>
+        <img src="assets/projects/p01.png" alt="UB City" width="626" height="1029" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white lg:opacity-0 lg:translate-y-2 transition duration-500 lg:group-hover:opacity-100 lg:group-hover:translate-y-0" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">UB City</h3>
         </div>
       </a>
       <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="0.6161">
-        <img src="assets/projects/p02.png" alt="Palace Hotel Lobby" width="896" height="552" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
-        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
-          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Palace Hotel Lobby</h3>
+        <img src="assets/projects/p02.png" alt="Leela Palace" width="896" height="552" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white lg:opacity-0 lg:translate-y-2 transition duration-500 lg:group-hover:opacity-100 lg:group-hover:translate-y-0" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Leela Palace</h3>
         </div>
       </a>
       <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="1.6475">
         <img src="assets/projects/p03.png" alt="Novotel" width="627" height="1033" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
-        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white lg:opacity-0 lg:translate-y-2 transition duration-500 lg:group-hover:opacity-100 lg:group-hover:translate-y-0" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
           <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Novotel</h3>
         </div>
       </a>
       <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="0.7057">
-        <img src="assets/projects/p04.png" alt="Tech Campus" width="887" height="626" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
-        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
-          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Tech Campus</h3>
+        <img src="assets/projects/p04.png" alt="Vrindavan Tech Village" width="887" height="626" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white lg:opacity-0 lg:translate-y-2 transition duration-500 lg:group-hover:opacity-100 lg:group-hover:translate-y-0" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Vrindavan Tech Village</h3>
         </div>
       </a>
       <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="0.7043">
-        <img src="assets/projects/p05.png" alt="Intel Reception" width="886" height="624" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
-        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
-          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Intel Reception</h3>
+        <img src="assets/projects/p05.png" alt="Intel Campus" width="886" height="624" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white lg:opacity-0 lg:translate-y-2 transition duration-500 lg:group-hover:opacity-100 lg:group-hover:translate-y-0" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Intel Campus</h3>
         </div>
       </a>
       <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="0.7040">
-        <img src="assets/projects/p06.png" alt="Residential Development" width="885" height="623" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
-        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
-          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Residential Development</h3>
+        <img src="assets/projects/p06.png" alt="ITC Kohénur" width="885" height="623" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white lg:opacity-0 lg:translate-y-2 transition duration-500 lg:group-hover:opacity-100 lg:group-hover:translate-y-0" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">ITC Kohénur</h3>
         </div>
       </a>
       <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="0.6163">
-        <img src="assets/projects/p07.png" alt="Residential Apartments" width="894" height="551" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
-        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
-          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Residential Apartments</h3>
+        <img src="assets/projects/p07.png" alt="Edwardian" width="894" height="551" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white lg:opacity-0 lg:translate-y-2 transition duration-500 lg:group-hover:opacity-100 lg:group-hover:translate-y-0" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Edwardian</h3>
         </div>
       </a>
       <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="1.6497">
-        <img src="assets/projects/p08.png" alt="Corporate Tower" width="628" height="1036" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
-        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
-          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Corporate Tower</h3>
+        <img src="assets/projects/p08.png" alt="RGA Tech Park" width="628" height="1036" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white lg:opacity-0 lg:translate-y-2 transition duration-500 lg:group-hover:opacity-100 lg:group-hover:translate-y-0" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">RGA Tech Park</h3>
         </div>
       </a>
       <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="0.6186">
-        <img src="assets/projects/p09.png" alt="Business Park" width="894" height="553" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
-        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
-          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Business Park</h3>
+        <img src="assets/projects/p09.png" alt="Pritech Park" width="894" height="553" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white lg:opacity-0 lg:translate-y-2 transition duration-500 lg:group-hover:opacity-100 lg:group-hover:translate-y-0" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Pritech Park</h3>
         </div>
       </a>
       <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="1.6459">
-        <img src="assets/projects/p10.png" alt="Retail &amp; Mall" width="627" height="1032" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
-        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
-          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Retail &amp; Mall</h3>
+        <img src="assets/projects/p10.png" alt="The Forum" width="627" height="1032" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white lg:opacity-0 lg:translate-y-2 transition duration-500 lg:group-hover:opacity-100 lg:group-hover:translate-y-0" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">The Forum</h3>
         </div>
       </a>
       <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="0.7065">
-        <img src="assets/projects/p11.png" alt="Podium Terrace" width="886" height="626" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
-        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
-          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Podium Terrace</h3>
+        <img src="assets/projects/p11.png" alt="Knowledge City" width="886" height="626" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white lg:opacity-0 lg:translate-y-2 transition duration-500 lg:group-hover:opacity-100 lg:group-hover:translate-y-0" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Knowledge City</h3>
         </div>
       </a>
       <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="1.2500">
-        <img src="assets/projects/p12.jpg" alt="Hotel Arcade" width="1200" height="1500" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
-        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
-          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Hotel Arcade</h3>
+        <img src="assets/projects/p12.jpg" alt="Leela Residences" width="1200" height="1500" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white lg:opacity-0 lg:translate-y-2 transition duration-500 lg:group-hover:opacity-100 lg:group-hover:translate-y-0" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Leela Residences</h3>
         </div>
       </a>
       <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="0.7054">
-        <img src="assets/projects/p13.png" alt="Golf Course" width="886" height="625" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
-        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
-          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Golf Course</h3>
+        <img src="assets/projects/p13.png" alt="Prestige Golfshire" width="886" height="625" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white lg:opacity-0 lg:translate-y-2 transition duration-500 lg:group-hover:opacity-100 lg:group-hover:translate-y-0" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Prestige Golfshire</h3>
         </div>
       </a>
       <a href="#" class="mas-item reveal group relative block overflow-hidden rounded-[6px]" data-r="0.6134">
-        <img src="assets/projects/p14.png" alt="Glass Pyramid Roof" width="895" height="549" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
-        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
-          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Glass Pyramid Roof</h3>
+        <img src="assets/projects/p14.png" alt="Saleh Ahmed" width="895" height="549" loading="lazy" class="w-full h-full object-cover block transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" />
+        <div class="absolute inset-x-0 bottom-0 p-5 pt-16 text-white lg:opacity-0 lg:translate-y-2 transition duration-500 lg:group-hover:opacity-100 lg:group-hover:translate-y-0" style="background:linear-gradient(to top, rgba(14,14,12,.72), transparent)">
+          <h3 class="text-[22px] leading-[27px] tracking-[-0.03em]">Saleh Ahmed</h3>
         </div>
       </a>
     </div>
@@ -304,87 +322,151 @@ tailwind.config = {
 </section>
 
 <!-- ============ SERVICES ============ -->
-<section id="services" class="bg-[#dbd9cb] py-[120px]">
-  <div class="mx-auto max-w-[1440px] px-4 lg:px-16">
-    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 reveal">
-      <h2 class="h-lg">Our <span class="">services</span></h2>
-      <div class="lg:w-[380px] pb-3">
-        <p class="text-[14px] leading-[20px] text-ink/60">Six core disciplines, from the city plan to the interior. Each is led by specialists inside the studio, so a project is designed, coordinated and delivered under one roof.</p>
-        <a href="#contact" class="inline-flex items-center gap-2 mt-4 text-[14px] font-medium">Enquire <i class="ri-arrow-right-up-line text-[18px] leading-none"></i></a>
-      </div>
+<section id="services" class="bg-[#e9e8e0] py-[120px] lg:py-[160px] overflow-hidden">
+  <div class="mx-auto max-w-[1760px] px-6 lg:px-12">
+    <div class="flex flex-col items-center text-center lg:text-left lg:flex-row lg:items-end justify-between gap-6 lg:gap-16 reveal">
+      <h2 class="text-[#28421d] h-lg">What we <span class="">do</span></h2>
+      <p class="lg:w-[460px] pb-3 desc text-ink/60">Six core disciplines, from the city plan to the interior, designed and delivered under one roof.</p>
     </div>
-    <div class="grid md:grid-cols-3 gap-x-6 gap-y-16 mt-20">
-      <a href="#contact" class="block reveal">
-        <div class="zoom overflow-hidden rounded-[6px] aspect-[421/300]"><img src="assets/tashkent.jpg" alt="Urban Design" class="w-full h-full object-cover" /></div>
-        <h3 class="mt-5 text-[24px] leading-[30px] tracking-[-0.02em]">Urban Design</h3>
-        <p class="mt-2 text-[14px] leading-[19.6px] text-ink/60 max-w-[380px]">Shaping streets, districts and public spaces that work as part of the wider city.</p>
-      </a>
-      <a href="#contact" class="block reveal">
-        <div class="zoom overflow-hidden rounded-[6px] aspect-[421/300]"><img src="assets/dubai.jpg" alt="Master Planning" class="w-full h-full object-cover" /></div>
-        <h3 class="mt-5 text-[24px] leading-[30px] tracking-[-0.02em]">Master Planning</h3>
-        <p class="mt-2 text-[14px] leading-[19.6px] text-ink/60 max-w-[380px]">Large-scale planning for campuses, townships and mixed-use developments.</p>
-      </a>
-      <a href="#contact" class="block reveal">
-        <div class="zoom overflow-hidden rounded-[6px] aspect-[421/300]"><img src="assets/casa.jpg" alt="Landscape" class="w-full h-full object-cover" /></div>
-        <h3 class="mt-5 text-[24px] leading-[30px] tracking-[-0.02em]">Landscape</h3>
-        <p class="mt-2 text-[14px] leading-[19.6px] text-ink/60 max-w-[380px]">Open spaces and greenery designed as an extension of the architecture.</p>
-      </a>
-      <a href="#contact" class="block reveal">
-        <div class="zoom overflow-hidden rounded-[6px] aspect-[421/300]"><img src="assets/facade.jpg" alt="Architecture" class="w-full h-full object-cover" /></div>
-        <h3 class="mt-5 text-[24px] leading-[30px] tracking-[-0.02em]">Architecture</h3>
-        <p class="mt-2 text-[14px] leading-[19.6px] text-ink/60 max-w-[380px]">Residential towers, hotels and commercial buildings, from concept to completion.</p>
-      </a>
-      <a href="#contact" class="block reveal">
-        <div class="zoom overflow-hidden rounded-[6px] aspect-[421/300]"><img src="assets/london.jpg" alt="Workplace Design" class="w-full h-full object-cover" /></div>
-        <h3 class="mt-5 text-[24px] leading-[30px] tracking-[-0.02em]">Workplace Design</h3>
-        <p class="mt-2 text-[14px] leading-[19.6px] text-ink/60 max-w-[380px]">Offices, tech parks and IT campuses built around how teams actually work.</p>
-      </a>
-      <a href="#contact" class="block reveal">
-        <div class="zoom overflow-hidden rounded-[6px] aspect-[421/300]"><img src="assets/room3.jpg" alt="Interior Design" class="w-full h-full object-cover" /></div>
-        <h3 class="mt-5 text-[24px] leading-[30px] tracking-[-0.02em]">Interior Design</h3>
-        <p class="mt-2 text-[14px] leading-[19.6px] text-ink/60 max-w-[380px]">Interiors detailed with the same care and discipline as the building itself.</p>
-      </a>
+    <div class="mt-12 lg:mt-16">
+      <div class="min-w-0">
+        <div id="svcTrack" class="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2" style="scrollbar-width:none">
+        <a href="#contact" class="svc-card group shrink-0 snap-start w-[78vw] sm:w-[360px] lg:w-[400px] rounded-[20px] bg-white p-3 flex flex-col">
+          <div class="overflow-hidden rounded-[14px] h-[190px]"><img src="assets/tashkent.jpg" alt="Urban Design" class="w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" /></div>
+          <div class="px-3 pt-5 flex-1 flex flex-col">
+            <h3 class="mt-1 text-[24px] leading-[30px] tracking-[-0.02em]">Urban Design</h3>
+            
+            <p class="mt-4 pb-3 desc text-ink/60">Shaping streets, districts and public spaces that work as part of the wider city.</p>
+          </div>
+        </a>
+        <a href="#contact" class="svc-card group shrink-0 snap-start w-[78vw] sm:w-[360px] lg:w-[400px] rounded-[20px] bg-white p-3 flex flex-col">
+          <div class="overflow-hidden rounded-[14px] h-[190px]"><img src="assets/dubai.jpg" alt="Master Planning" class="w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" /></div>
+          <div class="px-3 pt-5 flex-1 flex flex-col">
+            <h3 class="mt-1 text-[24px] leading-[30px] tracking-[-0.02em]">Master Planning</h3>
+            
+            <p class="mt-4 pb-3 desc text-ink/60">Large-scale planning for campuses, townships and mixed-use developments.</p>
+          </div>
+        </a>
+        <a href="#contact" class="svc-card group shrink-0 snap-start w-[78vw] sm:w-[360px] lg:w-[400px] rounded-[20px] bg-white p-3 flex flex-col">
+          <div class="overflow-hidden rounded-[14px] h-[190px]"><img src="assets/casa.jpg" alt="Landscape" class="w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" /></div>
+          <div class="px-3 pt-5 flex-1 flex flex-col">
+            <h3 class="mt-1 text-[24px] leading-[30px] tracking-[-0.02em]">Landscape</h3>
+            
+            <p class="mt-4 pb-3 desc text-ink/60">Open spaces and greenery designed as an extension of the architecture.</p>
+          </div>
+        </a>
+        <a href="#contact" class="svc-card group shrink-0 snap-start w-[78vw] sm:w-[360px] lg:w-[400px] rounded-[20px] bg-white p-3 flex flex-col">
+          <div class="overflow-hidden rounded-[14px] h-[190px]"><img src="assets/facade.jpg" alt="Architecture" class="w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" /></div>
+          <div class="px-3 pt-5 flex-1 flex flex-col">
+            <h3 class="mt-1 text-[24px] leading-[30px] tracking-[-0.02em]">Architecture</h3>
+            
+            <p class="mt-4 pb-3 desc text-ink/60">Residential towers, hotels and commercial buildings, from concept to completion.</p>
+          </div>
+        </a>
+        <a href="#contact" class="svc-card group shrink-0 snap-start w-[78vw] sm:w-[360px] lg:w-[400px] rounded-[20px] bg-white p-3 flex flex-col">
+          <div class="overflow-hidden rounded-[14px] h-[190px]"><img src="assets/london.jpg" alt="Workplace Design" class="w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" /></div>
+          <div class="px-3 pt-5 flex-1 flex flex-col">
+            <h3 class="mt-1 text-[24px] leading-[30px] tracking-[-0.02em]">Workplace Design</h3>
+            
+            <p class="mt-4 pb-3 desc text-ink/60">Offices, tech parks and IT campuses built around how teams actually work.</p>
+          </div>
+        </a>
+        <a href="#contact" class="svc-card group shrink-0 snap-start w-[78vw] sm:w-[360px] lg:w-[400px] rounded-[20px] bg-white p-3 flex flex-col">
+          <div class="overflow-hidden rounded-[14px] h-[190px]"><img src="assets/room3.jpg" alt="Interior Design" class="w-full h-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]" /></div>
+          <div class="px-3 pt-5 flex-1 flex flex-col">
+            <h3 class="mt-1 text-[24px] leading-[30px] tracking-[-0.02em]">Interior Design</h3>
+            
+            <p class="mt-4 pb-3 desc text-ink/60">Interiors detailed with the same care and discipline as the building itself.</p>
+          </div>
+        </a>
+        </div>
+        <div class="mt-8 flex items-center justify-end">
+          <div class="w-[120px] h-px bg-ink/15 relative"><span id="svcBar" class="absolute left-0 -top-px h-[2px] bg-ink transition-all duration-300" style="width:30%"></span></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ STATS ============ -->
-<section id="stats" style="font-family:'Poppins',sans-serif" class="relative overflow-hidden bg-night text-white py-[70px]">
-  <canvas class="stars" data-stars></canvas>
-  <div class="relative mx-auto max-w-[1440px] px-4 lg:px-16">
-    <div class="grid grid-cols-2 lg:flex lg:justify-between gap-x-8 lg:gap-x-12 gap-y-14">
-      <div class="stat reveal">
-        <p class="odo-wrap text-[clamp(44px,5.8vw,86px)] leading-none tracking-[-0.05em] whitespace-nowrap"><span class="odo" data-to="2000" aria-label="2000+"></span><span class="odo-suf">+</span></p>
-        <p class="mt-6 text-[13px] leading-[19px] text-white/60 uppercase tracking-[.1em]">Projects</p>
+<!-- ============ WHY US ============ -->
+<section id="why" class="bg-[#2a3121] text-white py-[120px] lg:py-[160px]">
+  <div class="mx-auto max-w-[1760px] px-6 lg:px-12">
+    <div class="flex flex-col items-center text-center lg:text-left lg:flex-row lg:items-end justify-between gap-6 lg:gap-16 reveal">
+      <h2 class="h-lg">Why <span class="">us?</span></h2>
+      <p class="lg:w-[460px] pb-3 desc text-white/60">A studio small enough to stay close to every project, and experienced enough to see it through.</p>
+    </div>
+  </div>
+  <div class="mx-auto max-w-[1760px] px-6 lg:px-12">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 mt-16 lg:mt-24">
+      <div class="reveal text-center px-8 lg:px-12 py-14 lg:py-16  ">
+        <div class="flex justify-center"><svg viewBox="0 0 120 120" class="w-[110px] h-[110px]"><circle cx="60" cy="60" r="58" stroke="rgba(255,255,255,.55)" stroke-width="1" fill="none" opacity=".5"/><circle cx="60" cy="60" r="40" stroke="rgba(255,255,255,.55)" stroke-width="1" fill="none"/><circle cx="60" cy="60" r="22" stroke="rgba(255,255,255,.55)" stroke-width="1" fill="none"/></svg></div>
+        <h3 class="mt-12 text-[22px] leading-[28px] tracking-[-0.02em]">Five Decades of Experience</h3>
+        <p class="mt-5 desc text-white/60 max-w-[380px] mx-auto">Over fifty years of shaping Bengaluru and South India.</p>
       </div>
-      <div class="stat reveal">
-        <p class="odo-wrap text-[clamp(44px,5.8vw,86px)] leading-none tracking-[-0.05em] whitespace-nowrap"><span class="odo" data-to="200" aria-label="200+"></span><span class="odo-suf">+</span></p>
-        <p class="mt-6 text-[13px] leading-[19px] text-white/60 uppercase tracking-[.1em]">Million sq ft<br/>(completed projects)</p>
+      <div class="reveal text-center px-8 lg:px-12 py-14 lg:py-16 relative lg:after:content-[''] lg:after:absolute lg:after:left-0 lg:after:top-[22%] lg:after:h-[56%] lg:after:w-px lg:after:bg-white/15">
+        <div class="flex justify-center"><svg viewBox="0 0 120 120" class="w-[110px] h-[110px]"><rect x="14" y="40" width="60" height="62" rx="10" stroke="rgba(255,255,255,.55)" stroke-width="1" fill="none"/><rect x="26" y="28" width="60" height="62" rx="10" stroke="rgba(255,255,255,.55)" stroke-width="1" fill="none"/><rect x="40" y="16" width="60" height="62" rx="10" stroke="rgba(255,255,255,.55)" stroke-width="1" fill="none" opacity=".6"/></svg></div>
+        <h3 class="mt-12 text-[22px] leading-[28px] tracking-[-0.02em]">Everything Under One Roof</h3>
+        <p class="mt-5 desc text-white/60 max-w-[380px] mx-auto">Architecture, interiors and planning, all in one studio.</p>
       </div>
-      <div class="stat reveal">
-        <p class="odo-wrap text-[clamp(44px,5.8vw,86px)] leading-none tracking-[-0.05em] whitespace-nowrap"><span class="odo" data-to="70" aria-label="70+"></span><span class="odo-suf">+</span></p>
-        <p class="mt-6 text-[13px] leading-[19px] text-white/60 uppercase tracking-[.1em]">Architects</p>
+      <div class="reveal text-center px-8 lg:px-12 py-14 lg:py-16 relative lg:after:content-[''] lg:after:absolute lg:after:left-0 lg:after:top-[22%] lg:after:h-[56%] lg:after:w-px lg:after:bg-white/15">
+        <div class="flex justify-center"><svg viewBox="0 0 120 120" class="w-[110px] h-[110px]"><path d="M40 20l26 0 22 40-22 40-26 0-22-40z" stroke="rgba(255,255,255,.55)" stroke-width="1" fill="none"/><path d="M54 24l26 0 22 36-22 36-26 0-22-36z" stroke="rgba(255,255,255,.55)" stroke-width="1" fill="none" opacity=".7"/><path d="M68 28l20 0 18 32-18 32-20 0-18-32z" stroke="rgba(255,255,255,.55)" stroke-width="1" fill="none" opacity=".45"/></svg></div>
+        <h3 class="mt-12 text-[22px] leading-[28px] tracking-[-0.02em]">Shaped by the Site</h3>
+        <p class="mt-5 desc text-white/60 max-w-[380px] mx-auto">Every design responds to its site, climate and people.</p>
       </div>
-      <div class="stat reveal">
-        <p class="odo-wrap text-[clamp(44px,5.8vw,86px)] leading-none tracking-[-0.05em] whitespace-nowrap"><span class="odo" data-to="45" aria-label="45+"></span><span class="odo-suf">+</span></p>
-        <p class="mt-6 text-[13px] leading-[19px] text-white/60 uppercase tracking-[.1em]">Million sq ft<br/>(current projects)</p>
+      <div class="reveal text-center px-8 lg:px-12 py-14 lg:py-16 relative lg:after:content-[''] lg:after:absolute lg:after:left-0 lg:after:top-[22%] lg:after:h-[56%] lg:after:w-px lg:after:bg-white/15">
+        <div class="flex justify-center"><svg viewBox="0 0 120 120" class="w-[110px] h-[110px]"><circle cx="60" cy="38" r="26" stroke="rgba(255,255,255,.55)" stroke-width="1" fill="none"/><circle cx="40" cy="72" r="26" stroke="rgba(255,255,255,.55)" stroke-width="1" fill="none"/><circle cx="82" cy="74" r="26" stroke="rgba(255,255,255,.55)" stroke-width="1" fill="none" opacity=".7"/></svg></div>
+        <h3 class="mt-12 text-[22px] leading-[28px] tracking-[-0.02em]">Lasting Relationships</h3>
+        <p class="mt-5 desc text-white/60 max-w-[380px] mx-auto">Each handover is the start of a long relationship.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLIENTS ============ -->
+<section id="clients" class="bg-[#dbd9cb] py-[100px] lg:py-[140px]">
+  <div class="mx-auto max-w-[1760px] px-6 lg:px-12">
+    <div class="grid grid-cols-2 lg:grid-cols-5 pl-px pt-px">
+      <p class="text-[#28421d] col-span-2 flex items-start gap-3 text-[16px] font-bold tracking-[.02em] pb-8 lg:pb-0 lg:pt-1 lg:self-start"><span class="w-1 h-1 rounded-full bg-[#28421d] mt-[9px]"></span>Our Clients &amp; Partners</p>
+      <div class="reveal grid place-items-center h-[140px] lg:h-[200px] border border-black/10 -mt-px -ml-px px-6 lg:px-10">
+        <img src="assets/clients/leela.svg" alt="The Leela Palaces" loading="lazy" class="h-[32px] lg:h-[48px] max-w-full w-auto object-contain" />
+      </div>
+      <div class="reveal grid place-items-center h-[140px] lg:h-[200px] border border-black/10 -mt-px -ml-px px-6 lg:px-10">
+        <img src="assets/clients/itc.svg" alt="ITC Hotels" loading="lazy" class="h-[32px] lg:h-[48px] max-w-full w-auto object-contain" />
+      </div>
+      <div class="reveal grid place-items-center h-[140px] lg:h-[200px] border border-black/10 -mt-px -ml-px px-6 lg:px-10">
+        <img src="assets/clients/intel.svg" alt="Intel" loading="lazy" class="h-[32px] lg:h-[48px] max-w-full w-auto object-contain" />
+      </div>
+      <div class="reveal grid place-items-center h-[140px] lg:h-[200px] border border-black/10 -mt-px -ml-px px-6 lg:px-10">
+        <img src="assets/clients/novotel.svg" alt="Novotel" loading="lazy" class="h-[32px] lg:h-[48px] max-w-full w-auto object-contain" />
+      </div>
+      <div class="reveal grid place-items-center h-[140px] lg:h-[200px] border border-black/10 -mt-px -ml-px px-6 lg:px-10">
+        <img src="assets/clients/conrad.svg" alt="Conrad" loading="lazy" class="h-[32px] lg:h-[48px] max-w-full w-auto object-contain" />
+      </div>
+      <div class="reveal grid place-items-center h-[140px] lg:h-[200px] border border-black/10 -mt-px -ml-px px-6 lg:px-10">
+        <img src="assets/clients/prestige.png" alt="Prestige Group" loading="lazy" class="h-[64px] lg:h-[100px] max-w-full w-auto object-contain" />
+      </div>
+      <div class="reveal grid place-items-center h-[140px] lg:h-[200px] border border-black/10 -mt-px -ml-px px-6 lg:px-10">
+        <img src="assets/clients/edwardian.svg" alt="Edwardian" loading="lazy" class="h-[44px] lg:h-[68px] max-w-full w-auto object-contain" />
+      </div>
+      <div class="reveal grid place-items-center h-[140px] lg:h-[200px] border border-black/10 -mt-px -ml-px px-6 lg:px-10">
+        <img src="assets/clients/taj.svg" alt="Taj Hotels" loading="lazy" class="h-[32px] lg:h-[48px] max-w-full w-auto object-contain" />
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============ IN THE NEWS ============ -->
-<section id="news" class="bg-[#dbd9cb] py-[120px]">
-  <div class="mx-auto max-w-[1440px] px-4 lg:px-16 grid lg:grid-cols-[1fr_533px] gap-10 lg:gap-[120px] items-start">
+<section id="news" class="bg-[#dbd9cb] pt-0 pb-[120px]">
+  <div class="mx-auto max-w-[1760px] px-6 lg:px-12 grid lg:grid-cols-[minmax(0,700px)_533px] lg:justify-center gap-10 lg:gap-[96px] items-start">
     <div class="reveal order-2 lg:order-1">
-      <h2 class="h-lg">In the <span class="">news</span></h2>
+      <h2 class="text-[#28421d] h-lg">In the <span class="">news</span></h2>
       <p class="mt-8 text-[22px] leading-[30px] tracking-[-0.02em] text-ink/70 max-w-[560px]">Article published by ITP Media Group &amp; Architect and Interiors India.</p>
-      <div class="mt-8 space-y-6 text-[15px] leading-[24px] text-ink/60 max-w-[620px]">
+      <div class="mt-8 space-y-6 desc text-ink/60 max-w-[700px] lg:max-w-[760px]">
         <p>“As I sit here, in my studio, I was reflecting on the lengthy path to this room, this office, this city and this wonderful profession of architecture. Five decades later, being in the same line, how is it possible to be still vitally interested, still keen to create, still keen to put dreams to reality,” muses Architect TM Thomas, the man who established his Architectural practice in the early 1970’s.</p>
         <p>By 1999, when his son Tilak Thomas joined the firm alongside him, Thomas Associates had already established itself as one of the most admired architectural practices in Bengaluru, building the skyline of the city.</p>
         <p>Today, father and son have designed some of the most well-known buildings in South India, be it the UB City or the Kingfisher Tower, residential skyscrapers for some of the leading developers, large-scale Tech Parks and IT Campus for some of the big Technology firms or hospitality projects like Leela Palace Hotel and Residences, ITC Kohenur and Taj Vivanta to name a few. The firm has, over five decades, seen the transformation of the city from a quiet ‘pensioners paradise’ to the mega city it is today.</p>
       </div>
-      <a href="https://mags.itp.com/ArchitectandinteriorsIndia/AI_001_08_2021/#page=10" target="_blank" rel="noopener" class="btn bg-ink text-white h-[50px] pl-7 pr-2 gap-5 mt-10">Read the Article <span class="w-[34px] h-[34px] rounded-full bg-white text-ink grid place-items-center"><i class="ri-arrow-right-up-line text-[18px] leading-none"></i></span></a>
+      <a href="https://mags.itp.com/ArchitectandinteriorsIndia/AI_001_08_2021/#page=10" target="_blank" rel="noopener" class="btn bg-ink text-white h-[58px] pl-8 pr-2 gap-5 mt-10">Read the Article <span class="w-[44px] h-[44px] rounded-full bg-white text-ink grid place-items-center"><i class="ri-arrow-right-up-line text-[18px] leading-none"></i></span></a>
     </div>
     <a href="https://mags.itp.com/ArchitectandinteriorsIndia/AI_001_08_2021/#page=10" target="_blank" rel="noopener" class="relative block reveal zoom overflow-hidden rounded-[6px] w-full max-w-[533px] order-1 lg:order-2">
       <img src="assets/magazine-cover.png" alt="Architect and Interiors India, August 2021, Thomas Associates feature" class="w-full h-auto" />
@@ -397,29 +479,28 @@ tailwind.config = {
   <canvas class="stars" data-stars></canvas>
   <div class="relative px-4 pt-[190px] pb-[130px]">
     <h2 class="h-xl reveal">Let’s design what<br/><span class="">comes next.</span></h2>
-    <p class="mt-10 text-[16px] text-white/85">You can contact us for more information.</p>
-    <div class="mt-8 flex flex-wrap justify-center gap-3">
-      <a href="mailto:enquiries@thomassociates.com" class="btn bg-white text-ink h-[40px] px-5 text-[14px]">New Business Enquiries</a>
-      <a href="tel:+918040787000" class="btn border border-white/40 text-white h-[40px] px-5 text-[14px] hover:bg-white/10">+91 80 4078 7000</a>
+    <div class="mt-12 flex flex-wrap justify-center gap-3">
+      <a href="mailto:enquiries@thomassociates.com" class="btn bg-white text-ink h-[58px] pl-8 pr-2 gap-5 ">New Business Enquiries <span class="w-[44px] h-[44px] rounded-full bg-ink text-white grid place-items-center"><i class="ri-arrow-right-up-line text-[18px] leading-none"></i></span></a>
+      <a href="tel:+918040787000" class="btn bg-white text-ink h-[58px] pl-8 pr-2 gap-5 ">+91 80 4078 7000 <span class="w-[44px] h-[44px] rounded-full bg-ink text-white grid place-items-center"><i class="ri-arrow-right-up-line text-[18px] leading-none"></i></span></a>
     </div>
   </div>
 </section>
 
 <!-- ============ FOOTER ============ -->
 <footer class="relative overflow-hidden text-white bg-[#2a3121]">
-  <div class="relative mx-auto max-w-[1440px] px-4 lg:px-16 pt-[110px]">
+  <div class="relative mx-auto max-w-[1760px] px-6 lg:px-12 pt-[110px]">
     <div class="grid lg:grid-cols-[1fr_auto] gap-16">
       <div>
         <img src="assets/client-logo.svg" alt="Thomas Associates Architects" class="h-14 w-auto" style="filter:brightness(0) invert(1)" />
-        <p class="mt-6 text-[14px] leading-[20px] text-white/85 max-w-[320px]">Thomas Associates Architects, an architecture and workplace design studio in Bengaluru.</p>
+        <p class="mt-6 text-[18px] leading-[28px] text-white/85 max-w-[380px]">Thomas Associates Architects, an architecture and workplace design studio in Bengaluru.</p>
       </div>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-x-8 sm:gap-x-14 gap-y-10 text-[14px] text-white/85 min-w-0">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-x-8 sm:gap-x-14 gap-y-10 text-[18px] text-white/85 min-w-0">
         <div><p class="eyebrow text-white/45 mb-5" style="letter-spacing:.18em">Explore</p><ul class="space-y-3"><li><a href="#services">Services</a></li><li><a href="#developments">Projects</a></li><li><a href="#residence">Our Story</a></li><li><a href="#contact">Contact</a></li></ul></div>
         <div class="col-span-2 sm:col-span-1 order-last sm:order-none min-w-0"><p class="eyebrow text-white/45 mb-5" style="letter-spacing:.18em">Contact</p><ul class="space-y-4 break-words">
-          <li><a href="mailto:enquiries@thomassociates.com" class="block">enquiries@thomassociates.com</a><span class="text-[12px] text-white/50">New Business Enquiries</span></li>
-          <li><a href="mailto:careers@thomassociates.com" class="block">careers@thomassociates.com</a><span class="text-[12px] text-white/50">Career Opportunities</span></li>
-          <li><a href="mailto:products@thomassociates.com" class="block">products@thomassociates.com</a><span class="text-[12px] text-white/50">Vendor Empanelment</span></li></ul></div>
-        <div><p class="eyebrow text-white/45 mb-5" style="letter-spacing:.18em">Studio</p><address class="not-italic space-y-3 leading-[20px]">
+          <li><a href="mailto:enquiries@thomassociates.com" class="block">enquiries@thomassociates.com</a><span class="text-[16px] text-white/50">New Business Enquiries</span></li>
+          <li><a href="mailto:careers@thomassociates.com" class="block">careers@thomassociates.com</a><span class="text-[16px] text-white/50">Career Opportunities</span></li>
+          <li><a href="mailto:products@thomassociates.com" class="block">products@thomassociates.com</a><span class="text-[16px] text-white/50">Vendor Empanelment</span></li></ul></div>
+        <div><p class="eyebrow text-white/45 mb-5" style="letter-spacing:.18em">Studio</p><address class="not-italic space-y-3 leading-[28px]">
           <p><a href="https://goo.gl/maps/toneTC8PSf1XSQYZ9" target="_blank" rel="noopener" class="hover:underline underline-offset-4">Thomas Associates Architects<br/>No. 32/4 Kasturba Road Cross<br/>Bangalore – 560001<br/>Karnataka, India</a></p>
           <p><a href="tel:+918040787000">+91 80 4078 7000</a></p></address></div>
         <div><p class="eyebrow text-white/45 mb-5" style="letter-spacing:.18em">Socials</p><ul class="space-y-3">
@@ -429,9 +510,8 @@ tailwind.config = {
       </div>
     </div>
 
-    <p class="wordmark font-display text-center leading-none select-none mt-16 lg:mt-10 whitespace-nowrap" style="font-size:clamp(64px,16.6vw,240px);letter-spacing:.02em">THOMAS</p>
-
-    <div class="flex flex-col items-center text-center gap-3 md:flex-row md:justify-between md:text-left pb-8 pt-12 text-[12px] text-white/60">
+    
+    <div class="flex flex-col items-center text-center gap-3 md:flex-row md:justify-between md:text-left pb-8 pt-12 text-[16px] text-white/60">
       <span>© 2026 Thomas Associates. All Rights Reserved.</span>
       <span>Designed &amp; developed by <a href="https://renoble.agency" target="_blank" rel="noopener" class="font-semibold underline underline-offset-4">Renoble</a></span>
     </div>
@@ -471,11 +551,19 @@ tailwind.config = {
   // lenis smooth scroll
   const lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
   (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })(0);
+  // menu / anchor links: GSAP ScrollToPlugin (Lenis paused while the tween runs)
+  gsap.registerPlugin(ScrollToPlugin);
   document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
     const id = a.getAttribute('href');
-    if (id === '#') { e.preventDefault(); lenis.scrollTo(0, { duration: 1.4 }); return; }
-    const t = document.querySelector(id);
-    if (t) { e.preventDefault(); lenis.scrollTo(t, { duration: 1.4 }); }
+    const t = id === '#' ? null : document.querySelector(id);
+    if (id !== '#' && !t) return;
+    e.preventDefault();
+    const y = t ? Math.round(t.getBoundingClientRect().top + window.scrollY) : 0;
+    lenis.stop();
+    gsap.to(window, {
+      scrollTo: { y, autoKill: false }, duration: 1.4, ease: 'power3.inOut', overwrite: true,
+      onComplete: () => { lenis.start(); lenis.scrollTo(y, { immediate: true }); },
+    });
   }));
 
   // loader
@@ -508,7 +596,7 @@ tailwind.config = {
   // hero scroll: white card dissolves, revealing the sky
   const hero = document.getElementById('hero'), card = document.getElementById('heroCard'), ui = document.getElementById('heroUi'), tower = document.getElementById('tower');
   const onScroll = () => {
-    const max = hero.offsetHeight - innerHeight;
+    const max = hero.offsetHeight - document.getElementById("heroSticky").offsetHeight;
     const p = Math.min(1, Math.max(0, scrollY / max));
     const f = Math.min(1, p * 1.6);
     card.style.opacity = 1 - f;
@@ -526,6 +614,22 @@ tailwind.config = {
     requestAnimationFrame(step);
   }), { threshold: .6 });
   document.querySelectorAll('[data-count]').forEach(el => co.observe(el));
+
+  // services carousel
+  { const tr = document.getElementById('svcTrack'), bar = document.getElementById('svcBar');
+    const step = () => (tr.querySelector('.svc-card').offsetWidth + 16);
+    const upd = () => { const m = tr.scrollWidth - tr.clientWidth, w = tr.clientWidth / tr.scrollWidth; bar.style.width = (w * 100) + '%'; bar.style.marginLeft = ((m ? tr.scrollLeft / m : 0) * (1 - w) * 100) + '%'; };
+    tr.addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd); upd();
+    // autoslide
+    let paused = false;
+    ['mouseenter','touchstart','pointerdown'].forEach(e => tr.addEventListener(e, () => paused = true, { passive: true }));
+    ['mouseleave','touchend'].forEach(e => tr.addEventListener(e, () => paused = false, { passive: true }));
+    setInterval(() => {
+      if (paused || document.hidden) return;
+      const r = tr.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
+      const m = tr.scrollWidth - tr.clientWidth;
+      if (tr.scrollLeft >= m - 4) tr.scrollTo({ left: 0 }); else tr.scrollBy({ left: step() });
+    }, 3000); }
 
   // showreel modal
   (() => {
